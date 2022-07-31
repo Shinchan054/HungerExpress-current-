@@ -1,0 +1,22 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  z-index: 10;
+}
+
+a {
+  color: #00b7ff;
+}
+.navbar {
+  background-color: #484848;
+}
+.navbar .navbar-nav .nav-link {
+  color: #fff;
+}
+.navbar .navbar-nav .nav-link:hover {
+  color: #fbc531;
+}
+.navbar .navbar-nav .active > .nav-link {
+  color: #fbc531;
+}

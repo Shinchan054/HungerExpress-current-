@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Search result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/customer.css">
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo"><img src="/images/logo.png" length="50" width="50"><b>HungerExpress</b></a>
+    </header>
+
+    <section class="features" id="features">
+        <h1 class="heading"> Restaurants</h1>
+    <div class="box-container">
+
+       <% for(var i=0 ; i < restaurants.length ; i++){ %>
+            <div class="box">
+                <img src= <%= "/images/rest"+id[i]+".png" %> alt="img">
+                <a href=<%="/restaurants/"+restaurants[i].id%>>
+                <h2><%= restaurants[i].name %> </h2>
+                </a>
+            </div>
+
+        <% } %>
+    </div>
+    </section>
+    </body>
+</html>

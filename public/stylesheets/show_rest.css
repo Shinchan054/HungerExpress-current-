@@ -1,0 +1,134 @@
+:root{
+    --orange: #ff7800;
+    --black: #000;
+    --light-color: #666;
+    --box-shadow :0 .5rem 1rem rgba(0,0,0,.1);
+    --border: .2rem solid rgba(0,0,0,.1);
+    --outline: .1rem solid rgba(0,0,0,.1);
+    --outline-hover: .2rem solid var(var(--black));
+}
+
+ *{
+    font-family: 'Edu SA Beginner', cursive;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    outline:none;
+    border:none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all ,2s linear;
+}
+
+html{
+    font-size: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+}
+
+body{
+    background : lightslategray;
+}
+
+.fa-cart-plus{
+    background:#0652DD;
+  }
+  
+  .addtocart{
+    display:block;
+    padding:0.5em 1em 0.5em 1em;
+    border-radius:100px;
+    border:none;
+    font-size:2em;
+    justify-content: center;
+    position: relative;
+    background:#0652DD;
+    cursor:pointer;
+    height:1em;
+    width:4em;
+    overflow:hidden;
+    transition:transform 0.1s;
+    z-index:1;
+  }
+  .addtocart:hover{
+    transform:scale(1.1);
+  }
+  .pretext{
+    color:#fff;
+    background:#0652DD;
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family: 'Quicksand', sans-serif;
+    font-size: small;
+  }
+  i{
+    margin-right:10px;
+  }
+  .done{
+    background:#be2edd;
+    position:absolute;
+    width:100%;
+    top:0;
+    left:0;
+    transition:transform 0.3s ease;
+  
+    transform:translate(-110%) skew(-40deg);
+  }
+  .posttext{
+    background:#be2edd;
+  }
+  .fa-check{
+    background:#be2edd;
+  }
+
+  .heading{
+    text-align: center;
+    padding: 2rem 0;
+    padding-bottom: 3rem;
+    font-size: 3.5rem;
+    color: #000;
+    background: #ff7800;
+    clip-path: polygon(100% 0,93% 50%,100% 99%,0% 100%,7% 50%,0% 0%);
+}
+
+.products{
+    justify-content: center;
+}
+
+.products .product-slider {
+    display:contents;
+    grid-template-columns: repeat(auto-fit,minmax(30rem,1fr));
+    gap: 1.5em;
+}
+
+.products .product-slider .box{
+    height: auto;
+    width: 50%;
+    padding: 1rem 0.5rem;
+    background: lightgray;
+    outline: var(--outline);
+    outline-offset: -1rem;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+}
+
+.products .product-slider .box:hover{
+    outline: var(--outline-hover);
+    outline-offset: -1rem;
+}
+
+.products .product-slider .box img{
+    margin: 1rem 0;
+    height: 15rem;
+}
+.catHeader{
+    font-size: 100px;
+    text-align: center;
+    color: black;
+}

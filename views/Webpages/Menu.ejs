@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Menu</title>
+    <link rel="stylesheet" href="/stylesheets/show_rest.css">
+</head>
+<body>
+    <section class="products" id="products">
+        <h1 class="heading"><%=title%></h1>
+        <div class="product-slider">
+            <div class="wrapper">
+               <%for(var i=0 ; i<cat.length ; i++ ) { %>
+                <h1 class ="catHeader"> <%= cat[i] %> </h1>
+                <%for(var j=0 ; j<item[i].length ; j++ ) { %>
+                <div class="box">
+                        <a href="#"><img src= <%="/images/"+img[i][j]+".png" %>></a>
+                        <h2><%= item[i][j].name %></h2>
+                        <p> <%= item[i][j].description %> </p>
+                        <p> <%= item[i][j].price %> bdt</p>
+                        <button class="addtocart">
+                            <div class="pretext">
+                              <i class="fas fa-cart-plus"></i> ADD TO CART
+                            </div>
+
+                            <div class="pretext done">
+                              <div class="posttext"><i class="fas fa-check">Added</i></div>
+                            </div>
+                          </button>
+                </div>
+                <% } %>
+                <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1><%=title%></h1>
+     <nav class="firstNav">
+        <div>
+            <img src="/images/logo.png" height="200" width="200" alt="logo">
+        </div>
+        <div>
+            <ul>
+                <li><a href= <%= "/restaurant/menu/"+id %> >Menu Management</a></li>
+                <li><a href= <%= "/restaurant/add_category/"+id %> >Add Category</a></li>
+                <li><a href= <%= "/restaurant/add_item/"+id%> >Add Item</a></li>
+                <li><a href="/restaurant/login">LogOut</a></li>
+
+            </ul>
+        </div>
+     </nav>
+    </body>
+</html>

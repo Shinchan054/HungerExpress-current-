@@ -1,0 +1,100 @@
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href= '/stylesheets/webpageStyleSheets/navbar.css' />
+    <link rel='stylesheet' href='/stylesheets/webpageStyleSheets/Show_item.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </head>
+  <body>
+    <%- include('../Webpages/navbar'); %>
+
+    <div class="container show-item-container">
+      <img src="/restaurant/image?id=<%= data.images[0].image_id %>" class="img-fluid img-thumbnail rounded mx-auto d-block" height="400px" width="600px" alt="Responsive image">
+      <div class="jumbotron">
+        <span class="edit-item-title"><%= data.item.name %></span>
+        <!-- <button type="button" class="btn btn-primary edit-item-button" data-toggle="modal" data-target="#exampleModal">
+          Edit
+        </button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <p><%= data.item.description %></p>
+        <p>Rating : <%= data.item.rating %> </p>
+        <p>Count : <%= data.item.count %> </p>
+        
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Available Options
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <% for(var i = 0; i < data.item_types.length; i++){%>
+              <li>Name: <%= data.item_types[i].name %> | Weight: <%= data.item_types[i].weight %> | Price: <%= data.item_types[i].price %></li>
+            <%}%>
+          </ul>
+        </div>
+        <p></p>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Categories
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <% for(var i = 0; i < data.category.length; i++){%>
+              <li><a href="/restaurant/menu?category_id=<%= data.category[i].id %>"><%= data.category[i].name %></a></li>
+            <%}%>
+          </ul>
+        </div>
+        <p></p>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">AddOns
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <% for(var i = 0; i < data.addon.length; i++){%>
+              <li><%= data.addon[i].name %></li>
+            <%}%>
+          </ul>
+        </div>
+      </div>
+      <p></p>
+      <div class="jumbotron">
+        <h2>Reviews</h2>
+        <% for(var i = 0; i < data.reviews.length; i++){%>
+        <div class="card">
+          <h5 class="card-header">Customer Name</h5>
+          <div class="card-body">
+            <span class="heading">Rating:  <%= data.reviews[i].rating %></span>
+            <p class="card-text"><%= data.reviews[i].description %></p>
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- ends-->
+  </body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

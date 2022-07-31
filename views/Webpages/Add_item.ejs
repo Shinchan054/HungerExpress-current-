@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href= '/stylesheets/webpageStyleSheets/navbar.css' />
+    <link rel="stylesheet" href= '/stylesheets/webpageStyleSheets/create-item.css' />
+  </head>
+  <body>
+
+    <!-- form starts-->
+      <div class="create-item">
+        <div class="create-item-title">
+          <h5>Create New Item</h5>
+        </div>
+
+        <form class="create-item-form" action= "/restaurant/add_item" method="post", enctype="multipart/form-data">
+
+          <div class="form-group">
+            <label for="item-name">Item Name</label>
+            <input type="text" class="form-control" id="item-name" placeholder="Give an item name" name="name" required>
+          </div>
+          <div class="form-group">
+          <label for="id"></label>
+            <input type="hidden" class="form-control" id="id" placeholder="Give an item name" name="id" value=<%=id%> >
+             </div>
+          <div class="form-group">
+            <label for="item-description">Item Description</label>
+            <textarea class="form-control" id="item-description" rows="3" name="description" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category" required>
+              <%for(var i = 0; i < data.length; i++){%>
+              <option value="<%= data[i].id%>"><%= data[i].name%></option>
+              <%}%>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity (between 1 and 100):</label>
+            <input type="number" class="form-control" id="quantity" name="count" min="1" max="100" required>
+          </div>
+
+          <div class="form-group">
+            <label for="item-photo">Upload New Photo</label>
+            <input type="file" class="form-control-file" id="item-photo" name="image" required>
+          </div>
+          <div class="form-group">
+            <label for="item-type-price-1">Price(in Tk)</label>
+            <input type="text" class="form-control" id="item-type-price-1" name="price1" placeholder="e.g. 900" required>
+            </div>
+
+          
+          <div class="form-group add-item-submit">
+            <button type="submit" class="btn btn-primary add-item-submit-btn">Submit</button>
+          </div>
+          
+        </form>
+      </div>
+    <!-- form ends-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/javascripts/webpageJavascripts/Add_item.js"></script>
+  </body>
+</html>

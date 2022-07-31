@@ -1,0 +1,38 @@
+.create-item {
+  position: relative;
+  top: 60px;
+  padding-top: 50px;
+  padding-left: 200px;
+  padding-right: 10px;
+  width: 80%;
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.create-item-title {
+  text-align: center;
+  font-size: 40px;
+}
+
+.item-type-details {
+  padding: 10px 50px;
+  border: 1px solid #abc;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.add-item-submit {
+  margin-top: 10px;
+}
+
+.add-type-btn {
+  position: relative;
+  left: 20%;
+}
+
+.add-item-type-delete-btn {
+  border: none;
+  border-radius: 10px;
+  background: #dc3545;
+  color: white;
+}

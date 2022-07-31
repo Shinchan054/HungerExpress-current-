@@ -1,0 +1,490 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model addon {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(50)
+  price           Int
+  count           Int
+  cart_item_addon cart_item_addon[]
+  item_addon      item_addon[]      @ignore
+}
+
+model address {
+  id                 Int                  @id @default(autoincrement())
+  location           String               @db.VarChar(20)
+  block              String               @db.VarChar(20)
+  road               String               @db.VarChar(20)
+  house              String               @db.VarChar(20)
+  apartment          String               @db.VarChar(20)
+  postal_code        String               @db.VarChar(20)
+  start              DateTime             @db.Timestamp(6)
+  finish             DateTime             @db.Timestamp(6)
+  restaurant_manager restaurant_manager[]
+}
+
+model admin {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(50)
+  dob           DateTime        @db.Timestamp(6)
+  phone         String          @db.VarChar(20)
+  email         String          @db.VarChar(30)
+  coin_use_type coin_use_type[]
+  promo         promo[]
+}
+
+model cart {
+  id                           Int         @id @default(autoincrement())
+  restaurant_id                Int
+  customer_id                  Int
+  order_time                   DateTime    @db.Timestamp(6)
+  delivery_time                DateTime    @db.Timestamp(6)
+  total_price                  Int
+  order_id                     Int?
+  customer                     customer    @relation(fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  restaurant                   restaurant  @relation(fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_cart_order_idToorderr orderr?     @relation("cart_order_idToorderr", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
+  cart_item                    cart_item[]
+  orderr_cartToorderr_cart_id  orderr[]    @relation("cartToorderr_cart_id")
+}
+
+model cart_item {
+  id              Int               @id
+  item_id         Int
+  cart_id         Int
+  total_price     Int
+  count           Int
+  cart            cart              @relation(fields: [cart_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  item            item              @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cart_item_addon cart_item_addon[]
+}
+
+model cart_item_addon {
+  id           Int       @id
+  cart_item_id Int
+  addon_id     Int
+  total_price  Int
+  count        Int
+  addon        addon     @relation(fields: [addon_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cart_item    cart_item @relation(fields: [cart_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model category {
+  id            Int             @id @default(autoincrement())
+  restaurant_id Int
+  name          String          @db.VarChar(50)
+  restaurant    restaurant      @relation(fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  item_category item_category[] @ignore
+}
+
+model coin_history {
+  id               Int           @id @default(autoincrement())
+  coin_use_type_id Int
+  customer_id      Int
+  voucher_id       Int
+  time             DateTime      @db.Timestamp(6)
+  coin_use_type    coin_use_type @relation(fields: [coin_use_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  customer         customer      @relation(fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  voucher          voucher[]
+}
+
+model coin_use_type {
+  id             Int            @id @default(autoincrement())
+  admin_id       Int
+  available_data String         @db.VarChar(50)
+  coin_amount    Int
+  voucher_amount Int
+  admin          admin          @relation(fields: [admin_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  coin_history   coin_history[]
+}
+
+model customer {
+  id                                                        Int                @id @default(autoincrement())
+  name                                                      String             @db.VarChar(50)
+  current_coin                                              Int
+  current_address_id                                        Int
+  customer_image_id                                         Int?
+  email                                                     String?            @db.VarChar(50)
+  password                                                  String?            @db.VarChar(50)
+  customer_image_customer_customer_image_idTocustomer_image customer_image?    @relation("customer_customer_image_idTocustomer_image", fields: [customer_image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "customer_image_id")
+  cart                                                      cart[]
+  coin_history                                              coin_history[]
+  customer_address                                          customer_address[]
+  customer_image_customerTocustomer_image_customer_id       customer_image[]   @relation("customerTocustomer_image_customer_id")
+  search_history                                            search_history[]
+}
+
+model customer_address {
+  id          Int      @id @default(autoincrement())
+  customer_id Int
+  location    String   @db.VarChar(20)
+  block       String   @db.VarChar(20)
+  road        String   @db.VarChar(20)
+  house       String   @db.VarChar(20)
+  apartment   String   @db.VarChar(20)
+  postal_code String   @db.VarChar(20)
+  start       String   @db.VarChar(20)
+  finish      String   @db.VarChar(20)
+  customer    customer @relation(fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model customer_image {
+  id                                                  Int        @id @default(autoincrement())
+  customer_id                                         Int
+  link                                                String     @db.VarChar(50)
+  time                                                DateTime   @db.Timestamp(6)
+  customer_customerTocustomer_image_customer_id       customer   @relation("customerTocustomer_image_customer_id", fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  customer_customer_customer_image_idTocustomer_image customer[] @relation("customer_customer_image_idTocustomer_image")
+}
+
+model delivery_address {
+  id                                                  Int      @id @default(autoincrement())
+  location                                            String   @db.VarChar(20)
+  block                                               String   @db.VarChar(20)
+  road                                                String   @db.VarChar(20)
+  house                                               String   @db.VarChar(20)
+  apartment                                           String   @db.VarChar(20)
+  postal_code                                         String   @db.VarChar(20)
+  order_id                                            Int?
+  orderr_delivery_address_order_idToorderr            orderr?  @relation("delivery_address_order_idToorderr", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
+  orderr_delivery_addressToorderr_delivery_address_id orderr[] @relation("delivery_addressToorderr_delivery_address_id")
+}
+
+model gift_info {
+  id                                    Int      @id @default(autoincrement())
+  order_id                              Int
+  name                                  String   @db.VarChar(50)
+  phone                                 String   @db.VarChar(13)
+  orderr_gift_info_order_idToorderr     orderr   @relation("gift_info_order_idToorderr", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_gift_infoToorderr_gift_info_id orderr[] @relation("gift_infoToorderr_gift_info_id")
+}
+
+model invoice {
+  id                                Int      @id @default(autoincrement())
+  order_id                          Int
+  vat_amount                        Float    @db.Real
+  delivery_fee                      Float    @db.Real
+  total_price                       Float    @db.Real
+  orderr_invoice_order_idToorderr   orderr   @relation("invoice_order_idToorderr", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_invoiceToorderr_invoice_id orderr[] @relation("invoiceToorderr_invoice_id")
+}
+
+model item {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(50)
+  description   String          @db.VarChar(50)
+  count         Int
+  rating        Float           @db.Real
+  restaurant_id Int?
+  price         Int?
+  avail         Int?
+  cart_item     cart_item[]
+  item_addon    item_addon[]    @ignore
+  item_category item_category[] @ignore
+  item_image    item_image[]    @ignore
+  item_review   item_review[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model item_addon {
+  id       Int   @default(autoincrement())
+  item_id  Int
+  addon_id Int
+  addon    addon @relation(fields: [addon_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  item     item  @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model item_category {
+  id          Int      @default(autoincrement())
+  item_id     Int
+  category_id Int
+  category    category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  item        item     @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model item_image {
+  id       Int  @default(autoincrement())
+  image_id Int
+  item_id  Int
+  item     item @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+model item_review {
+  id          Int     @id @default(autoincrement())
+  item_id     Int
+  order_id    Int
+  rating      Float   @db.Real
+  description String?
+  item        item    @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr      orderr  @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model normal_order {
+  id                    Int      @default(autoincrement())
+  cart_id               Int
+  delivery_address_id   Int
+  restaurant_manager_id Int
+  phone                 String   @db.VarChar(13)
+  name                  String?  @db.VarChar
+  payment_info_id       Int?
+  promo_use_id          Int?
+  voucher_id            Int?
+  invoice_id            Int?
+  gift_info_id          Int?
+  restaurant_review_id  Int?
+  estimated_time        DateTime @db.Timestamp(6)
+
+  @@ignore
+}
+
+model orderr {
+  id                                                               Int                 @id @default(autoincrement())
+  cart_id                                                          Int
+  delivery_address_id                                              Int
+  restaurant_manager_id                                            Int
+  phone                                                            String              @db.VarChar(13)
+  name                                                             String?             @db.VarChar
+  payment_info_id                                                  Int?
+  promo_use_id                                                     Int?
+  voucher_id                                                       Int?
+  invoice_id                                                       Int?
+  gift_info_id                                                     Int?
+  restaurant_review_id                                             Int?
+  gift_info_gift_infoToorderr_gift_info_id                         gift_info?          @relation("gift_infoToorderr_gift_info_id", fields: [gift_info_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gift_info_id")
+  invoice_invoiceToorderr_invoice_id                               invoice?            @relation("invoiceToorderr_invoice_id", fields: [invoice_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "invoice_id")
+  cart_cartToorderr_cart_id                                        cart                @relation("cartToorderr_cart_id", fields: [cart_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  delivery_address_delivery_addressToorderr_delivery_address_id    delivery_address    @relation("delivery_addressToorderr_delivery_address_id", fields: [delivery_address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  restaurant_manager                                               restaurant_manager  @relation(fields: [restaurant_manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  payment_info_orderr_payment_info_idTopayment_info                payment_info?       @relation("orderr_payment_info_idTopayment_info", fields: [payment_info_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "payment_info_id")
+  promo_use_orderr_promo_use_idTopromo_use                         promo_use?          @relation("orderr_promo_use_idTopromo_use", fields: [promo_use_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "promo_use_id")
+  restaurant_review_orderr_restaurant_review_idTorestaurant_review restaurant_review?  @relation("orderr_restaurant_review_idTorestaurant_review", fields: [restaurant_review_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "restaurant_review_id")
+  voucher_orderr_voucher_idTovoucher                               voucher?            @relation("orderr_voucher_idTovoucher", fields: [voucher_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "voucher_id")
+  cart_cart_order_idToorderr                                       cart[]              @relation("cart_order_idToorderr")
+  delivery_address_delivery_address_order_idToorderr               delivery_address[]  @relation("delivery_address_order_idToorderr")
+  gift_info_gift_info_order_idToorderr                             gift_info[]         @relation("gift_info_order_idToorderr")
+  invoice_invoice_order_idToorderr                                 invoice[]           @relation("invoice_order_idToorderr")
+  item_review                                                      item_review[]
+  payment_info_orderrTopayment_info_order_id                       payment_info[]      @relation("orderrTopayment_info_order_id")
+  promo_use_orderrTopromo_use_order_id                             promo_use[]         @relation("orderrTopromo_use_order_id")
+  restaurant_review_orderrTorestaurant_review_order_id             restaurant_review[] @relation("orderrTorestaurant_review_order_id")
+  state                                                            state[]
+  voucher_orderrTovoucher_order_id                                 voucher[]           @relation("orderrTovoucher_order_id")
+}
+
+model payment_info {
+  id                                          Int      @id @default(autoincrement())
+  order_id                                    Int
+  account_no                                  String   @db.VarChar(50)
+  type                                        String   @db.VarChar(50)
+  payment_time                                DateTime @db.Time(6)
+  transaction_id                              String   @db.VarChar(50)
+  orderr_orderrTopayment_info_order_id        orderr   @relation("orderrTopayment_info_order_id", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_orderr_payment_info_idTopayment_info orderr[] @relation("orderr_payment_info_idTopayment_info")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model pickup {
+  id                    Int      @default(autoincrement())
+  cart_id               Int
+  delivery_address_id   Int
+  restaurant_manager_id Int
+  phone                 String   @db.VarChar(13)
+  name                  String?  @db.VarChar
+  payment_info_id       Int?
+  promo_use_id          Int?
+  voucher_id            Int?
+  invoice_id            Int?
+  gift_info_id          Int?
+  restaurant_review_id  Int?
+  pin                   String   @db.VarChar(6)
+  target_time           DateTime @db.Timestamp(6)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model pre_order {
+  id                    Int      @default(autoincrement())
+  cart_id               Int
+  delivery_address_id   Int
+  restaurant_manager_id Int
+  phone                 String   @db.VarChar(13)
+  name                  String?  @db.VarChar
+  payment_info_id       Int?
+  promo_use_id          Int?
+  voucher_id            Int?
+  invoice_id            Int?
+  gift_info_id          Int?
+  restaurant_review_id  Int?
+  target_time           DateTime @db.Timestamp(6)
+
+  @@ignore
+}
+
+model promo {
+  id            Int         @id
+  promo_type_id Int
+  admin_id      Int
+  min_amount    Int
+  max_count     Int
+  start_time    DateTime    @db.Timestamp(6)
+  finish_time   DateTime    @db.Timestamp(6)
+  admin         admin       @relation(fields: [admin_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  promo_type    promo_type  @relation(fields: [promo_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  promo_use     promo_use[]
+}
+
+model promo_type {
+  id         Int     @id @default(autoincrement())
+  type       String  @db.VarChar(50)
+  owner_id   Int
+  value      Int
+  owner_type String  @db.VarChar(50)
+  promo      promo[]
+}
+
+model promo_use {
+  id                                    Int      @id @default(autoincrement())
+  promo_id                              Int
+  order_id                              Int
+  time                                  DateTime @db.Timestamp(6)
+  orderr_orderrTopromo_use_order_id     orderr   @relation("orderrTopromo_use_order_id", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  promo                                 promo    @relation(fields: [promo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_orderr_promo_use_idTopromo_use orderr[] @relation("orderr_promo_use_idTopromo_use")
+}
+
+model restaurant {
+  id                                                                      Int                  @id @default(autoincrement())
+  name                                                                    String               @db.VarChar(50)
+  location                                                                String               @db.VarChar(50)
+  rating                                                                  Float                @db.Real
+  current_service_charge_id                                               Int
+  current_address_id                                                      Int
+  restaurant_manager_id                                                   Int?
+  restaurant_manager_restaurant_restaurant_manager_idTorestaurant_manager restaurant_manager?  @relation("restaurant_restaurant_manager_idTorestaurant_manager", fields: [restaurant_manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "restaurant_manager_id")
+  cart                                                                    cart[]
+  category                                                                category[]
+  restaurant_address                                                      restaurant_address[]
+  restaurant_image                                                        restaurant_image[]
+  restaurant_manager_restaurantTorestaurant_manager_restaurant_id         restaurant_manager[] @relation("restaurantTorestaurant_manager_restaurant_id")
+  restaurant_review                                                       restaurant_review[]
+  service_charge                                                          service_charge[]
+}
+
+model restaurant_address {
+  id            Int        @id @default(autoincrement())
+  restaurant_id Int
+  location      String     @db.VarChar(20)
+  block         String     @db.VarChar(20)
+  road          String     @db.VarChar(20)
+  house         String     @db.VarChar(20)
+  apartment     String     @db.VarChar(20)
+  postal_code   String     @db.VarChar(20)
+  start         DateTime   @db.Timestamp(6)
+  finish        DateTime   @db.Timestamp(6)
+  restaurant    restaurant @relation(fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model restaurant_image {
+  id            Int        @id @default(autoincrement())
+  restaurant_id Int
+  image_id      Int?
+  restaurant    restaurant @relation(fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model restaurant_manager {
+  id                                                              Int          @id @default(autoincrement())
+  restaurant_id                                                   Int
+  address_id                                                      Int
+  name                                                            String       @db.VarChar(50)
+  dob                                                             DateTime     @db.Timestamp(6)
+  phone                                                           String       @db.VarChar(20)
+  email                                                           String       @db.VarChar(30)
+  password                                                        String?      @db.VarChar(50)
+  address                                                         address      @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  restaurant_restaurantTorestaurant_manager_restaurant_id         restaurant   @relation("restaurantTorestaurant_manager_restaurant_id", fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr                                                          orderr[]
+  restaurant_restaurant_restaurant_manager_idTorestaurant_manager restaurant[] @relation("restaurant_restaurant_manager_idTorestaurant_manager")
+}
+
+model restaurant_review {
+  id                                                    Int        @id @default(autoincrement())
+  restaurant_id                                         Int
+  order_id                                              Int
+  rating                                                Float      @db.Real
+  description                                           String?
+  orderr_orderrTorestaurant_review_order_id             orderr     @relation("orderrTorestaurant_review_order_id", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  restaurant                                            restaurant @relation(fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_orderr_restaurant_review_idTorestaurant_review orderr[]   @relation("orderr_restaurant_review_idTorestaurant_review")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model rush_order {
+  id                    Int      @default(autoincrement())
+  cart_id               Int
+  delivery_address_id   Int
+  restaurant_manager_id Int
+  phone                 String   @db.VarChar(13)
+  name                  String?  @db.VarChar
+  payment_info_id       Int?
+  promo_use_id          Int?
+  voucher_id            Int?
+  invoice_id            Int?
+  gift_info_id          Int?
+  restaurant_review_id  Int?
+  maximum_time          DateTime @db.Timestamp(6)
+  estimated_time        DateTime @db.Timestamp(6)
+
+  @@ignore
+}
+
+model search_history {
+  id          Int      @id @default(autoincrement())
+  customer_id Int
+  description String   @db.VarChar(50)
+  type        String   @db.VarChar(50)
+  time        DateTime @db.Timestamp(6)
+  customer    customer @relation(fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model service_charge {
+  id            Int        @id @default(autoincrement())
+  restaurant_id Int
+  value         Int
+  start         DateTime   @db.Timestamp(6)
+  finish        DateTime   @db.Timestamp(6)
+  restaurant    restaurant @relation(fields: [restaurant_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model state {
+  id          Int      @id @default(autoincrement())
+  order_id    Int
+  description String   @db.VarChar(50)
+  time        DateTime @db.Timestamp(6)
+  orderr      orderr   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model voucher {
+  id                                Int           @id @default(autoincrement())
+  order_id                          Int
+  time                              DateTime      @db.Timestamp(6)
+  coin_history_id                   Int?
+  coin_history                      coin_history? @relation(fields: [coin_history_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "coin_history_id")
+  orderr_orderrTovoucher_order_id   orderr        @relation("orderrTovoucher_order_id", fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orderr_orderr_voucher_idTovoucher orderr[]      @relation("orderr_voucher_idTovoucher")
+}

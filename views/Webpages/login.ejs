@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Login form</title>
+        <link rel="stylesheet" href="/stylesheets/login.css">
+    </head>
+
+    <body>
+      <div class="login">
+        <img src="/images/loginIcon.jpg" class="login_image">
+        <h1>Login here</h1>
+        <form action='/customer/login' method='post'>
+            <label for="username">E-mail</label><br>
+            <input type="text" id="username" name="username" required>
+            <br><br>
+            <label for="password">Password</label> <br>
+            <input type="password" id="password" name="password" required>
+            <br><br>
+            <button class="button">Login</button>
+        </form>
+        <br><br>
+            <a href="/customer/signup">Dont have an account? Sign up</a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+
+    <link rel='stylesheet' href='/stylesheets/webpageStyleSheets/Edit.css' />
+
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <p>Edit e ashchhi!</p>
+    <p><%= JSON.stringify(data) %></p>
+
+    <form action="/restaurant/edit" method="post">
+
+      <input type="text" name="type" value="category" hidden>
+
+      <!--
+        CREATE CATEGORY
+      -->
+
+<!--      <input type="text" name="action" value="create">-->
+<!--      <input type="text" name="name" value="category_burger">-->
+
+
+
+      <!--
+        EDIT CATEGORY NAME
+      -->
+
+<!--      <input type="text" name="action" value="edit_name">-->
+<!--      <input type="text" name="category_name" value="notun_naam">-->
+<!--      <input type="text" name="category_id" value="3">-->
+
+
+      <!--
+        Item list edit
+      -->
+
+            <input type="text" name="action" value="edit_items">
+            <input type="text" name="action_details" value="remove">
+<!--            <input type="text" name="action_details" value="add">-->
+
+            <input type="text" name="category_id" value="103">
+            <input type="text" name="count" value="3">
+
+            <input type="text" name="item_id1" value="12">
+            <input type="text" name="item_id3" value="13">
+
+
+      <br>
+      <input type="submit" value="Submit">
+
+    </form>
+
+    <script src="/javascripts/webpageJavascripts/Edit.js"></script>
+  </body>
+</html>
