@@ -25,17 +25,20 @@ router.get('/:id',async function(req,res){
         let im=[];
         for(var j=0;j < result1.rows.length;j++) {
 
-            var q2 = "select name,description,price  from item where id = " + result1.rows[j].item_id;
+            var q2 = "select name,description,price,id,avail  from item where id = " + result1.rows[j].item_id;
+
             const result2 = await pool.query(q2);
             //console.log(result2.rows);
-            var q2 = "select  image_id  from item_image where item_id = " + result1.rows[j].item_id;
-            console.log(q2);
-            const result3 = await pool.query(q2);
+            if (result2.rows[0].avail == 1) {
+                var q2 = "select  image_id  from item_image where item_id = " + result1.rows[j].item_id;
+                console.log(q2);
+                const result3 = await pool.query(q2);
 
 
-            a.push(result2.rows[0]);
-            im.push(result3.rows[0].image_id);
+                a.push(result2.rows[0]);
+                im.push(result3.rows[0].image_id);
 
+            }
         }
         item.push(a);
         img.push(im);

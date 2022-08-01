@@ -12,6 +12,8 @@ router.get('/:id',async function(req,res){
     const rest_name=await pool.query(q);
     var q="select id,name from category where restaurant_id = "+id;
     const result=await pool.query(q);
+    var r = "select image_id from restaurant_image where restaurant_id = "+id;
+    const rest_img=await pool.query(r);
     console.log(result.rows);
     for(var i=0;i < result.rows.length;i++) {
         var q1="select item_id from item_category where category_id = "+result.rows[i].id;
@@ -22,7 +24,7 @@ router.get('/:id',async function(req,res){
         let im=[];
         for(var j=0;j < result1.rows.length;j++) {
 
-            var q2 = "select name,description,price  from item where id = " + result1.rows[j].item_id;
+            var q2 = "select id,name,description,price  from item where id = " + result1.rows[j].item_id;
             const result2 = await pool.query(q2);
             //console.log(result2.rows);
             var q2 = "select  image_id  from item_image where item_id = " + result1.rows[j].item_id;
@@ -38,12 +40,21 @@ router.get('/:id',async function(req,res){
         img.push(im);
     }
     console.log('cat',category);
+    const img_url = "/images/rest"+rest_img.rows[0].image_id+".png";
     res.render('Webpages/menu',{
         title:rest_name.rows[0].name
         ,item : item,
         img:img,
-        cat:category
+        cat:category,
+        url : img_url
     });
+});
+router.post('/', async function (req, res, next) {
+    //console.log(req.body);
+    var q="Update item set avail=0 where id="+req.body.id+";";
+    const result3 = await pool.query(q);
+    console.log(result3.rows);
+
 });
 
 
