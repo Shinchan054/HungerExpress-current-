@@ -12,6 +12,9 @@ router.get('/', function (req, res, next) {
     const price=[];
     const qty =[];
     const subTotal=[];
+    if(!req.session.cart){
+        res.render('Webpages/noOrder');
+    }
     let totalprice=req.session.cart.totalPrice;
     let totalqty=req.session.cart.totalQty;
     for(var i=0;i<req.session.cart.key.length;i++){

@@ -9,6 +9,26 @@ var flash = require('express-flash');
 var bodyparser = require('body-parser');
 var session = require('express-session');
 
+
+
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+
+var initModels = require('./Models/init-models');
+var models = initModels(sequelize);
+
+models.category.findAll().then(function(result){
+    result.forEach(function(element) {
+        console.log(element.name);
+    }
+    );
+}
+).catch(function(err){
+    console.log('error',err);
+}
+);
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
