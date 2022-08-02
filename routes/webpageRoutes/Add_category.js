@@ -30,6 +30,7 @@ router.post('/', async function(req, res, next) {
         // const result1 = await pool.query(qu);
   
         models.category.create({
+            id: 1000,
             restaurant_id : rest_id,
             name : req.body.name
         }).then(function(result){
