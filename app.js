@@ -18,7 +18,6 @@ var initModels = require('./Models/init-models');
 var models = initModels(sequelize);
 
 
-console.log(rows);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

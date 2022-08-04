@@ -77,4 +77,39 @@ router.post('/update', async function (req, res, next) {
           res.json({ cart : req.session.cart});
 });
 
+// router.post('/plus', async function (req, res, next) {
+//     console.log('hahahahaha');
+//     let cart = req.session.cart;
+//        console.log(req.body.name);
+//        cart.items[req.body.name].qty = cart.items[req.body.name].qty + 1;
+//        cart.items[req.body.name].price = cart.items[req.body.name].price + req.body.price;
+//        cart.totalQty = cart.totalQty + 1;
+//        cart.totalPrice = cart.totalPrice + req.body.price;
+//        res.redirect('/');
+// }
+// );
+
+// router.post('/delete', async function (req, res, next) {
+//     console.log('received');
+//         if(!req.session.cart)
+//         {
+//               req.session.cart={
+//                 items:{},
+//                 totalQty:0,
+//                 totalPrice:0,
+//                 key:[]
+
+//             }
+//         }
+//         let cart = req.session.cart;
+//         console.log(req.body.name);
+//         if(cart.items[req.body.name])
+//         {
+//             cart.totalQty = cart.totalQty - cart.items[req.body.name].qty;
+//             cart.totalPrice = cart.totalPrice - cart.items[req.body.name].price;
+//             delete cart.items[req.body.name];
+//             cart.key.splice(cart.key.indexOf(req.body.name),1);
+//         }
+
+
 module.exports = router;
