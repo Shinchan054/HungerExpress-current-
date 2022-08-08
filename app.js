@@ -1,4 +1,3 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -16,7 +15,6 @@ const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/Hunger
 
 var initModels = require('./Models/init-models');
 var models = initModels(sequelize);
-
 
 
 var indexRouter = require('./routes/index');

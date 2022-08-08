@@ -3,7 +3,11 @@ var router = express.Router();
 const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
+var initModels = require('./../../Models/init-models');
+var models = initModels(sequelize);
 
 router.get('/',function(req,res){
 
@@ -18,17 +22,18 @@ router.post('/', async function(req,res,next)  {
     email=req.body.email;
     pass=req.body.password;
     console.log(email,pass);
-    const  result = await pool.query("select email,password,restaurant_id from restaurant_manager");
-    for(var i=0;i < result.rows.length;i++) {
-        if(result.rows[i].email==email&&result.rows[i].password==pass)
-        {
-           console.log('Hello');
-            res.redirect("/restaurant/home/"+result.rows[i].restaurant_id);
+    //const  result = await pool.query("select email,password,restaurant_id from restaurant_manager");
 
-            break;
+    let result=await models.restaurant_manager.findOne({
+        where: {
+            email: email,
+            password: pass
         }
+    });
+    if(result!=null)
+    {
 
-
+        res.redirect("/restaurant/home/"+result.restaurant_id);
 
 
     }

@@ -3,38 +3,43 @@ var router = express.Router();
 const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
+var initModels = require('./../../Models/init-models');
+var models = initModels(sequelize);
 
 router.get('/',function(req,res){
-        //const  result = await pool.query("select id from customer");
+
     console.log('hello login');
     res.render('Webpages/login');
 
-        //console.log(result.rows[0].id);
+
     });
 
 router.post('/', async function(req,res,next)  {
-        //const  result = await pool.query("select id from customer");
-    console.log('hello');
+
+
     let email;
     let pass;
     email=req.body.username;
     pass=req.body.password;
+    let result=await models.customer.findOne({
+        where: {
 
-    const  result = await pool.query("select email,password,id from customer");
-    for(var i=0;i < result.rows.length;i++) {
-        if(result.rows[i].email==email&&result.rows[i].password==pass)
-        {   res.cookie("id",result.rows[i].id);
-            res.redirect("/customer/home/"+result.rows[i].id);
-
-            break;
+            email: email,
+            password: pass
         }
+    });
+    console.log(result);
 
 
+        if(result!=null)
+        {   res.cookie("id",result.id);
+            res.redirect("/customer/home");
 
 
-    }
+        }
     res.render('Webpages/login');
-
     });
 module.exports = router;
