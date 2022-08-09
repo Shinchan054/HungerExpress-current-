@@ -15,6 +15,7 @@ addtocart.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         console.log("clicked");
          let item = JSON.parse(btn.dataset.item);
+         console.log(item);
           updateCart(item);
         //  let sent = {
         //         item: item.name,

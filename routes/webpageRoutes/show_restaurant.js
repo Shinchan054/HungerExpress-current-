@@ -74,12 +74,14 @@ router.get('/:id',async function(req,res){
 
                 a.push(result2);
                 im.push(result3.image_id);
+                //console.log(result2.id);
 
             }
         }
         item.push(a);
         img.push(im);
     }
+    //console.log(item);
     const img_url = "/images/rest"+rest_img.image_id+".png";
     res.render('Webpages/show_restaurants',{
         title:rest_name.name

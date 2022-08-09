@@ -35,10 +35,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(13),
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
+
     payment_info_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -71,14 +68,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    gift_info_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'gift_info',
-        key: 'id'
-      }
-    },
+
     restaurant_review_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
