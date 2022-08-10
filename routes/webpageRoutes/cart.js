@@ -5,7 +5,7 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -45,6 +45,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/update', async function (req, res, next) {
     console.log('received');
+    console.log(req.body.item);
      if(!req.session.cart)
      {
         req.session.cart={
@@ -57,27 +58,27 @@ router.post('/update', async function (req, res, next) {
      }
 
      let cart = req.session.cart;
-       console.log(req.body.name);
-         if(!cart.items[req.body.name])
+       console.log(req.body.item.name);
+         if(!cart.items[req.body.item.name])
          {
-            cart.items[req.body.name] ={
-                id:req.body.id,
-                name: req.body.name,
+            cart.items[req.body.item.name] ={
+                id:req.body.item.id,
+                name: req.body.item.name,
                 qty : 1,
-                price: req.body.price,
+                price: req.body.item.price,
 
             }
             cart.totalQty = cart.totalQty + 1;
-            cart.totalPrice = cart.totalPrice + req.body.price;
-            cart.key.push(req.body.name);
-            cart.rest_id=req.body.rest_id;
-            cart.customer_id=req.body.customer_id;
+            cart.totalPrice = cart.totalPrice + req.body.item.price;
+            cart.key.push(req.body.item.name);
+            cart.rest_id=req.body.rid;
+            cart.customer_id=req.body.cid;
          }
          else{
-            cart.items[req.body.name].qty = cart.items[req.body.name].qty + 1;
-            cart.items[req.body.name].price = cart.items[req.body.name].price + req.body.price;
+            cart.items[req.body.item.name].qty = cart.items[req.body.item.name].qty + 1;
+            cart.items[req.body.item.name].price = cart.items[req.body.item.name].price + req.body.item.price;
             cart.totalQty = cart.totalQty + 1;
-            cart.totalPrice = cart.totalPrice + req.body.price;
+            cart.totalPrice = cart.totalPrice + req.body.item.price;
 
          }
          console.log('hello',cart);
@@ -188,27 +189,6 @@ router.post('/minus', async function (req, res, next) {
 // }
 // );
 
-// router.post('/delete', async function (req, res, next) {
-//     console.log('received');
-//         if(!req.session.cart)
-//         {
-//               req.session.cart={
-//                 items:{},
-//                 totalQty:0,
-//                 totalPrice:0,
-//                 key:[]
-
-//             }
-//         }
-//         let cart = req.session.cart;
-//         console.log(req.body.name);
-//         if(cart.items[req.body.name])
-//         {
-//             cart.totalQty = cart.totalQty - cart.items[req.body.name].qty;
-//             cart.totalPrice = cart.totalPrice - cart.items[req.body.name].price;
-//             delete cart.items[req.body.name];
-//             cart.key.splice(cart.key.indexOf(req.body.name),1);
-//         }
 
 
 module.exports = router;

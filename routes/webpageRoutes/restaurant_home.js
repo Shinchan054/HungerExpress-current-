@@ -4,7 +4,7 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -26,7 +26,14 @@ router.get('/:id',async function(req,res){
         }
     });
      let url = "/images/rest"+rest_image.image_id+".png";
-    res.render('Webpages/restaurant_home',{id:ids,title:rest_name.name , url:url});
+    let ans=await models.cart.findAll({
+
+        where:{
+            restaurant_id:req.params.id,
+            order_id:null
+        }
+    });
+    res.render('Webpages/restaurant_home',{id:ids,title:rest_name.name , url:url,cart:ans});
 
 
 });

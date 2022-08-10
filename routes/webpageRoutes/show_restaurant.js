@@ -3,7 +3,7 @@ var router = express.Router();
 const url = require('url');
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -12,8 +12,9 @@ router.get('/:id',async function(req,res){
     let category=[];
     let img=[];
     var id=req.params.id;
-    //var q="select name from restaurant where id = "+id;
-    //const rest_name=await pool.query(q);
+    let cust_id=req.cookies.id;
+
+
     const rest_name=await models.restaurant.findOne({
         where:{
             id:id
@@ -90,7 +91,9 @@ router.get('/:id',async function(req,res){
         ,item : item,
         img:img,
         cat:category,
-        url : img_url
+        url : img_url,
+        rest_id:id,
+        cust_id:cust_id
     });
 });
 
