@@ -18,7 +18,7 @@
       <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
         <div class="d-flex justify-content-center align-items-center h-100">
           <div class="text-white">
-            <h1 class="mb-1"><%= title %></h1>
+            <h1 class="mb-1" data-rid="<%=rest_id%>"><%= title %></h1>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
   </header>
 
 
-    <section class="products" id="products">
+    <section class="products" id="products" data-cid="<%=cid%>">
 
 
                <%for(var i=0 ; i<cat.length ; i++ ) { %>

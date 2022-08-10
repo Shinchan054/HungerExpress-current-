@@ -84,6 +84,8 @@ router.get('/:id',async function(req,res){
     //console.log(item);
     const img_url = "/images/rest"+rest_img.image_id+".png";
     res.render('Webpages/show_restaurants',{
+        rest_id:id,
+        cid : 200,
         title:rest_name.name
         ,item : item,
         img:img,

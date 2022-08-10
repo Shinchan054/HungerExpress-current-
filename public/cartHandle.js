@@ -4,9 +4,15 @@
 
 let addtocart = document.querySelectorAll('.cart-btn');
 
-function updateCart(item){
+let rest_id = document.querySelector('.mb-1');
+console.log(rest_id.dataset.rid);
+
+let cust_id = document.querySelector('.products');
+console.log(cust_id.dataset.cid);
+
+function updateCart(item,rid, cid){
   
-    axios.post('/customer/cart/update', item).then(res=>{
+    axios.post('/customer/cart/update', {item:item, rid:rid , cid: cid}).then(res=>{
     console.log(res);
 })
 };
