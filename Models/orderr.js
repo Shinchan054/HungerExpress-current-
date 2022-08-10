@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     delivery_address_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'delivery_address',
         key: 'id'
@@ -25,17 +25,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     restaurant_manager_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'restaurant_manager',
         key: 'id'
       }
     },
     phone: {
-      type: DataTypes.STRING(13),
-      allowNull: false
-    },
-    status: {
       type: DataTypes.STRING(13),
       allowNull: true
     },
@@ -71,7 +67,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-
     restaurant_review_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -79,6 +74,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'restaurant_review',
         key: 'id'
       }
+    },
+    status: {
+      type: DataTypes.STRING(50),
+      allowNull: true
     }
   }, {
     sequelize,

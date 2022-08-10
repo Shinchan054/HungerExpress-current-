@@ -13,7 +13,7 @@ router.get('/:id',async function(req,res){
     let img=[];
     var id=req.params.id;
     let cust_id=req.cookies.cust_id;
-    console.log("fdkakgjfjkfjdsjdfkgjfd",cust_id);
+
 
 
     const rest_name=await models.restaurant.findOne({

@@ -4,7 +4,6 @@ var _address = require("./address");
 var _admin = require("./admin");
 var _cart = require("./cart");
 var _cart_item = require("./cart_item");
-var _cart_item_addon = require("./cart_item_addon");
 var _category = require("./category");
 var _coin_history = require("./coin_history");
 var _coin_use_type = require("./coin_use_type");
@@ -12,7 +11,6 @@ var _customer = require("./customer");
 var _customer_address = require("./customer_address");
 var _customer_image = require("./customer_image");
 var _delivery_address = require("./delivery_address");
-var _gift_info = require("./gift_info");
 var _invoice = require("./invoice");
 var _item = require("./item");
 var _item_addon = require("./item_addon");
@@ -44,7 +42,6 @@ function initModels(sequelize) {
   var admin = _admin(sequelize, DataTypes);
   var cart = _cart(sequelize, DataTypes);
   var cart_item = _cart_item(sequelize, DataTypes);
-  var cart_item_addon = _cart_item_addon(sequelize, DataTypes);
   var category = _category(sequelize, DataTypes);
   var coin_history = _coin_history(sequelize, DataTypes);
   var coin_use_type = _coin_use_type(sequelize, DataTypes);
@@ -52,7 +49,6 @@ function initModels(sequelize) {
   var customer_address = _customer_address(sequelize, DataTypes);
   var customer_image = _customer_image(sequelize, DataTypes);
   var delivery_address = _delivery_address(sequelize, DataTypes);
-  var gift_info = _gift_info(sequelize, DataTypes);
   var invoice = _invoice(sequelize, DataTypes);
   var item = _item(sequelize, DataTypes);
   var item_addon = _item_addon(sequelize, DataTypes);
@@ -78,8 +74,6 @@ function initModels(sequelize) {
   var state = _state(sequelize, DataTypes);
   var voucher = _voucher(sequelize, DataTypes);
 
-  cart_item_addon.belongsTo(addon, { as: "addon", foreignKey: "addon_id"});
-  addon.hasMany(cart_item_addon, { as: "cart_item_addons", foreignKey: "addon_id"});
   item_addon.belongsTo(addon, { as: "addon", foreignKey: "addon_id"});
   addon.hasMany(item_addon, { as: "item_addons", foreignKey: "addon_id"});
   restaurant_manager.belongsTo(address, { as: "address", foreignKey: "address_id"});
@@ -92,8 +86,6 @@ function initModels(sequelize) {
   cart.hasMany(cart_item, { as: "cart_items", foreignKey: "cart_id"});
   orderr.belongsTo(cart, { as: "cart_cart", foreignKey: "cart_id"});
   cart.hasMany(orderr, { as: "orderrs", foreignKey: "cart_id"});
-  cart_item_addon.belongsTo(cart_item, { as: "cart_item", foreignKey: "cart_item_id"});
-  cart_item.hasMany(cart_item_addon, { as: "cart_item_addons", foreignKey: "cart_item_id"});
   item_category.belongsTo(category, { as: "category", foreignKey: "category_id"});
   category.hasMany(item_category, { as: "item_categories", foreignKey: "category_id"});
   voucher.belongsTo(coin_history, { as: "coin_history", foreignKey: "coin_history_id"});
@@ -114,8 +106,6 @@ function initModels(sequelize) {
   customer_image.hasMany(customer, { as: "customers", foreignKey: "customer_image_id"});
   orderr.belongsTo(delivery_address, { as: "delivery_address_delivery_address", foreignKey: "delivery_address_id"});
   delivery_address.hasMany(orderr, { as: "orderrs", foreignKey: "delivery_address_id"});
-  orderr.belongsTo(gift_info, { as: "gift_info_gift_info", foreignKey: "gift_info_id"});
-  gift_info.hasMany(orderr, { as: "orderrs", foreignKey: "gift_info_id"});
   orderr.belongsTo(invoice, { as: "invoice_invoice", foreignKey: "invoice_id"});
   invoice.hasMany(orderr, { as: "orderrs", foreignKey: "invoice_id"});
   cart_item.belongsTo(item, { as: "item", foreignKey: "item_id"});
@@ -132,8 +122,6 @@ function initModels(sequelize) {
   orderr.hasMany(cart, { as: "carts", foreignKey: "order_id"});
   delivery_address.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(delivery_address, { as: "delivery_addresses", foreignKey: "order_id"});
-  gift_info.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
-  orderr.hasMany(gift_info, { as: "gift_infos", foreignKey: "order_id"});
   invoice.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(invoice, { as: "invoices", foreignKey: "order_id"});
   item_review.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
@@ -185,7 +173,6 @@ function initModels(sequelize) {
     admin,
     cart,
     cart_item,
-    cart_item_addon,
     category,
     coin_history,
     coin_use_type,
@@ -193,7 +180,6 @@ function initModels(sequelize) {
     customer_address,
     customer_image,
     delivery_address,
-    gift_info,
     invoice,
     item,
     item_addon,
