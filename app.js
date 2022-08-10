@@ -7,6 +7,7 @@ var dot = require('dotenv').config();
 var flash = require('express-flash');
 var bodyparser = require('body-parser');
 var session = require('express-session');
+const passport = require('passport');
 
 
 var hh;
@@ -35,6 +36,9 @@ app.use((req,res,next) => {
   res.locals.session = req.session;
   next();
 });
+// app.use(passport.initialize());
+// app.use(passport.session());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use(session(

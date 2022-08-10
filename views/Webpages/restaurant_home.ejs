@@ -66,6 +66,27 @@
   </nav>
   <!-- Navbar -->
 
+
+   
+      <h1 class="text-center"> Orders </h1>
+      <div class="d-flex justify-content-center">
+      <table class="table table-sm">
+        <tr>
+        <th>Order name</th>
+        <th>Date</th>
+        <th>Time</th>
+        </tr>
+        <tr>
+          <td>13131313</td>
+          <% var today = new Date() %>
+          <% var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
+          <% var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(); %>
+          <td><%= date %></td>
+          <td><%= time %></td>
+        </tr>
+      </table>
+    </div>
+
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
