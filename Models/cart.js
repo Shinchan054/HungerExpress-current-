@@ -25,11 +25,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     order_time: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     delivery_time: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     total_price: {
       type: DataTypes.INTEGER,

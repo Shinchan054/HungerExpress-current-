@@ -45,16 +45,20 @@ router.get('/', function (req, res, next) {
 
 router.post('/update', async function (req, res, next) {
     console.log('received');
-    console.log(req.body.item);
+    console.log('balllllllllllllllllllllll',req.body.cid);
      if(!req.session.cart)
      {
         req.session.cart={
             items:{},
             totalQty:0,
             totalPrice:0,
-            key:[]
+            key:[],
+            customer_id:req.body.cid,
+            restaurant_id:req.body.rid
+
 
         }
+
      }
 
      let cart = req.session.cart;
@@ -71,8 +75,9 @@ router.post('/update', async function (req, res, next) {
             cart.totalQty = cart.totalQty + 1;
             cart.totalPrice = cart.totalPrice + req.body.item.price;
             cart.key.push(req.body.item.name);
-            cart.rest_id=req.body.rid;
-            cart.customer_id=req.body.cid;
+            //cart.rest_id=req.body.rid;
+            //cart.customer_id=req.body.cid;
+            //cart.rest_id=req.body.rid;
          }
          else{
             cart.items[req.body.item.name].qty = cart.items[req.body.item.name].qty + 1;
@@ -89,20 +94,28 @@ router.post('/', async function (req, res, next) {
 
     let col=await models.cart.findAll();
     let l=col.length;
+    console.log(req.session.cart.restaurant_id,req.session.cart.customer_id);
     let ans=await models.cart.create({
         id:l+1,
-        customer_id:req.session.customer_id,
-        rest_id:req.session.rest_id,
+        customer_id:req.session.cart.customer_id,
+        restaurant_id:req.session.cart.restaurant_id,
         total_price:req.session.cart.totalPrice,
+        //order_time:new Date(),
+        //delivery_time:new Date(),
+
 
         });
+    console.log(req.session.cart.items[req.session.cart.key[0]]);
+    let an=await models.cart_item.findAll();
+    let ls=an.length+1;
     for(var i=0;i<req.session.cart.key.length;i++){
         let ans=await models.cart_item.create({
+            id:ls+i,
             cart_id:l+1,
             item_id:req.session.cart.items[req.session.cart.key[i]].id,
-            item_name:req.session.cart.items[req.session.cart.key[i]].name,
-            item_qty:req.session.cart.items[req.session.cart.key[i]].qty,
-            item_price:req.session.cart.items[req.session.cart.key[i]].price,
+            //item_name:req.session.cart.items[req.session.cart.key[i]].name,
+            count:req.session.cart.items[req.session.cart.key[i]].qty,
+            total_price:req.session.cart.items[req.session.cart.key[i]].price,
         });
     }
 

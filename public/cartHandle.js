@@ -22,7 +22,7 @@ addtocart.forEach((btn) => {
         console.log("clicked");
          let item = JSON.parse(btn.dataset.item);
          console.log(item);
-          updateCart(item);
+          updateCart(item,Number(rest_id.dataset.rid),Number(cust_id.dataset.cid));
         //  let sent = {
         //         item: item.name,
         //         price: item.price,

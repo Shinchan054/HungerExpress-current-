@@ -35,7 +35,7 @@ router.post('/', async function(req,res,next)  {
 
 
         if(result!=null)
-        {   res.cookie("id",result.id);
+        {   res.cookie("cust_id",result.id);
             res.redirect("/customer/home");
 
 

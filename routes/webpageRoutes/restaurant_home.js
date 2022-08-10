@@ -33,7 +33,52 @@ router.get('/:id',async function(req,res){
             order_id:null
         }
     });
-    res.render('Webpages/restaurant_home',{id:ids,title:rest_name.name , url:url,cart:ans});
+    const item_name=[];
+    const item_price=[];
+    const item_quantity=[];
+    const cust_name=[];
+    for(var i=0;i<ans.length;i++) {
+        let ans3 = await models.cart.findOne({
+            where: {
+                id: ans[i].id
+            }
+        });
+        let ans1 = await models.customer.findOne({
+            where: {
+                id: ans3.customer_id
+            }
+        });
+        cust_name.push(ans1.name);
+
+        const item_name1 = [];
+        const item_price1 = [];
+        const item_quantity1 = [];
+
+        let ans2 = await models.cart_item.findAll({
+            where: {
+                cart_id: ans[i].id
+            }
+        });
+        for (var j = 0; j < ans2.length; j++) {
+            let ans3 = await models.item.findOne({
+                where: {
+                    id: ans2[j].item_id
+                }
+
+            });
+            item_name1.push(ans3.name);
+            item_price1.push(ans2.total_price);
+            item_quantity1.push(ans2.count);
+
+        }
+        item_name.push(item_name1);
+        item_price.push(item_price1);
+        item_quantity.push(item_quantity1);
+
+    }
+    console.log(item_name);
+
+    res.render('Webpages/restaurant_home',{id:ids,title:rest_name.name , url:url,item_name:item_name,item_price:item_price,item_quantity:item_quantity,cust_name:cust_name});
 
 
 });

@@ -12,7 +12,8 @@ router.get('/:id',async function(req,res){
     let category=[];
     let img=[];
     var id=req.params.id;
-    let cust_id=req.cookies.id;
+    let cust_id=req.cookies.cust_id;
+    console.log("fdkakgjfjkfjdsjdfkgjfd",cust_id);
 
 
     const rest_name=await models.restaurant.findOne({
@@ -86,14 +87,13 @@ router.get('/:id',async function(req,res){
     const img_url = "/images/rest"+rest_img.image_id+".png";
     res.render('Webpages/show_restaurants',{
         rest_id:id,
-        cid : 200,
+        cid : cust_id,
         title:rest_name.name
         ,item : item,
         img:img,
         cat:category,
         url : img_url,
-        rest_id:id,
-        cust_id:cust_id
+        rest_id:id
     });
 });
 

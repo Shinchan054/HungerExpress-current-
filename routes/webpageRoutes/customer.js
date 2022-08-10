@@ -9,8 +9,8 @@ var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 router.get('/', async function(req, res, next) {
     //var ids=req.params.id;
-    var ids=req.cookies.id;
-    console.log(typeof(ids));
+    var ids=req.cookies.cust_id;
+    res.cookie("cust_id",ids);
     if(typeof(ids)!='undefined') {
         let result=await models.restaurant.findAll();
         //var qu = "select name,id  from restaurant";
