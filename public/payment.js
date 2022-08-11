@@ -55,8 +55,9 @@ form.addEventListener('submit', (e) => {
     if(card){
     stripe.createToken(card).then(result => {
         console.log(result.token.id);
-        axios.post('/customer/order_page/auth',{ordertype:'card', token: result.token.id}).then(res=>{
-            console.log(res);
+        axios.post('/customer/cart',{ordertype:'card', token: result.token.id}).then(res=>{
+            window.location.href=res.data.str;
+            //res.redirect(res.data.str);
         })
 
     }).catch(error => {
@@ -65,8 +66,9 @@ form.addEventListener('submit', (e) => {
     );
 }
 else{
-    axios.post('/customer/order_page/auth',{ordertype:'cod',token:null}).then(res=>{
-        console.log(res);
+
+    axios.post('/customer/cart',{ordertype:'cod',token:null}).then(res=>{
+        window.location.href=res.data.str;
     }).catch(error=>{
         console.log(error);
     }

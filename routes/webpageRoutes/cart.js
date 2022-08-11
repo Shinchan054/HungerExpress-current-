@@ -5,8 +5,8 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
-
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
+const stripe = require('stripe')(process.env.key)
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 
@@ -91,32 +91,82 @@ router.post('/update', async function (req, res, next) {
           res.json({ cart : req.session.cart});
 });
 router.post('/', async function (req, res, next) {
-
+    let str = null;
     let col=await models.cart.findAll();
     let l=col.length;
-    console.log(req.session.cart.restaurant_id,req.session.cart.customer_id);
-    let ans=await models.cart.create({
-        id:l+1,
-        customer_id:req.session.cart.customer_id,
-        restaurant_id:req.session.cart.restaurant_id,
-        total_price:req.session.cart.totalPrice,
-        //order_time:new Date(),
-        //delivery_time:new Date(),
+    let pt=req.body.ordertype;
+    //console.log('jfsakfasdfkasdlfkSFLSKDFADSLFDSAKFDSALFKDSF',pt);
+    //console.log(req.session.cart.restaurant_id,req.session.cart.customer_id);
+
+    if(pt=='cod'){
+        let ans=await models.cart.create({
+            id:l+1,
+            customer_id:req.session.cart.customer_id,
+            restaurant_id:req.session.cart.restaurant_id,
+            total_price:req.session.cart.totalPrice,
+            //order_time:new Date(),
+            //delivery_time:new Date(),
         });
-    console.log(req.session.cart.items[req.session.cart.key[0]]);
-    let an=await models.cart_item.findAll();
-    let ls=an.length+1;
-    for(var i=0;i<req.session.cart.key.length;i++){
-        let ans=await models.cart_item.create({
-            id:ls+i,
-            cart_id:l+1,
-            item_id:req.session.cart.items[req.session.cart.key[i]].id,
-            //item_name:req.session.cart.items[req.session.cart.key[i]].name,
-            count:req.session.cart.items[req.session.cart.key[i]].qty,
-            total_price:req.session.cart.items[req.session.cart.key[i]].price,
+        console.log(req.session.cart.items[req.session.cart.key[0]]);
+        let an=await models.cart_item.findAll();
+        let ls=an.length+1;
+        for(var i=0;i<req.session.cart.key.length;i++){
+            let ans=await models.cart_item.create({
+                id:ls+i,
+                cart_id:l+1,
+                item_id:req.session.cart.items[req.session.cart.key[i]].id,
+                //item_name:req.session.cart.items[req.session.cart.key[i]].name,
+                count:req.session.cart.items[req.session.cart.key[i]].qty,
+                total_price:req.session.cart.items[req.session.cart.key[i]].price,
+            });
+        }
+        str = '/customer/order_page/'+(l+1);
+        res.json({str:str});
+        //res.redirect('/customer/order_page/'+(l+1));
+    }
+    else{
+        stripe.charges.create({
+            amount: req.session.cart.totalPrice*100,
+            source : req.body.token,
+            currency: 'bdt',
+            description: 'test charge'
+        }).then(async function(){
+            console.log("dhuksi");
+            let ans= await models.cart.create({
+                id:l+1,
+                customer_id:req.session.cart.customer_id,
+                restaurant_id:req.session.cart.restaurant_id,
+                total_price:req.session.cart.totalPrice,
+                //order_time:new Date(),
+                //delivery_time:new Date(),
+            });
+            //console.log(req.session.cart.items[req.session.cart.key[0]]);
+
+            let an= await models.cart_item.findAll();
+            let ls=an.length+1;
+            for(var i=0;i<req.session.cart.key.length;i++){
+                let ans= await models.cart_item.create({
+                    id:ls+i,
+                    cart_id:l+1,
+                    item_id:req.session.cart.items[req.session.cart.key[i]].id,
+                    //item_name:req.session.cart.items[req.session.cart.key[i]].name,
+                    count:req.session.cart.items[req.session.cart.key[i]].qty,
+                    total_price:req.session.cart.items[req.session.cart.key[i]].price,
+                });
+
+            }
+            str = '/customer/order_page/'+(l+1);
+            res.json({str:str});
+
+        }).catch(err =>{
+            str = '/customer/cart';
+            res.json({str:str});
+            //res.redirect('/customer/cart');
         });
     }
-    res.redirect('/customer/order_page/'+(l+1));
+
+
+//res.json({str:str});
 
 });
 

@@ -9,35 +9,13 @@ const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/Hunge
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
-router.get('/:id', async function (req, res, next) {
-let ans=await models.cart.findAll({
-
-    where:{
-        restaurant_id:req.params.id,
-        order_id:null
-    }
-});
-
-
-
-
-
+router.get('/', async function (req, res, next) {
+res.render('Webpages/location');
 });
 router.post('/', async function (req, res, next) {
-let ans=await models.orderr.findAll();
-let l=ans.length;
-let cr=await models.orderr.create({
-    order_id:l+1,
-    cart_id:req.body.cart_id,
-    restaurant_manager_id:req.body.restaurant_manager_id,
-    status:"confirm",
-
-    order_total:req.body.order_total
-});
-});
-
-
-
-
-
+    lat=req.body.lat;
+    long=req.body.lng;
+    console.log(lat,long);
+}
+);
 module.exports = router;
