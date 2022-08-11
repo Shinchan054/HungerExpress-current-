@@ -37,7 +37,7 @@ router.get('/:id',async function(req,res){
    // const item_price=[];
     //const item_quantity=[];
     const cust_name=[];
-    console.log("ans=====",ans);
+    const cart_id=[];
     for(var i=0;i<ans.length;i++) {
 
         let ans3 = await models.cart.findOne({
@@ -45,13 +45,13 @@ router.get('/:id',async function(req,res){
                 id: ans[i].id
             }
         });
-        console.log("ans3=====", ans3);
+        cart_id.push(ans[i].id);
         let ans1 = await models.customer.findOne({
             where: {
                 id: ans3.customer_id
             }
         });
-        console.log("ans1=====", ans1);
+
         cust_name.push(ans1.name);
 
         //const item_name1 = [];
@@ -87,22 +87,12 @@ router.get('/:id',async function(req,res){
 
     console.log(item_name);
 
-    res.render('Webpages/restaurant_home',{id:ids,title:rest_name.name , url:url,item_name:item_name,cust_name:cust_name});
+    res.render('Webpages/restaurant_home',{id:ids,title:rest_name.name , url:url,item_name:item_name,cust_name:cust_name,cart_id:cart_id});
 
 
 });
 router.post('/', async function(req, res, next) {
- let result=await models.orderr.create({
-    id:10001,
-    cart_id:3,
- });
- let resa=await models.cart.update({
-        order_id:10001
-    },{
-        where:{
-            id:3
-        }
- });
+ console.log("asche");
 });
 
 
