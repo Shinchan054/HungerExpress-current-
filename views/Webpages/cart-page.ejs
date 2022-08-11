@@ -38,8 +38,14 @@
         </tbody>
       </table>  
       </div>
-      <form action='/customer/cart' method="POST">
-      <button> Place Order </button>
+      <form action='/customer/cart' method="POST" style="position: relative; transform: translate(50%,50%);">
+      
+        <label for="Payment">Choose Payment type:</label>
+<select name="payment-type" id="payment-type">
+    <option value="card">Card Payment</option>
+  <option value="cod">Cash on delivery</option>
+</select><br>
+      <button style="position: relative; transform:translate(200%,40%)"> Place Order </button>
       </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
