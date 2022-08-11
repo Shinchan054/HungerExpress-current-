@@ -55,7 +55,7 @@ form.addEventListener('submit', (e) => {
     if(card){
     stripe.createToken(card).then(result => {
         console.log(result.token.id);
-        axios.post('/',{ordertype:'card', token: result.token.id}).then(res=>{
+        axios.post('/customer/order_page/auth',{ordertype:'card', token: result.token.id}).then(res=>{
             console.log(res);
         })
 
@@ -65,7 +65,7 @@ form.addEventListener('submit', (e) => {
     );
 }
 else{
-    axios.post('/',{ordertype:'cod',token:null}).then(res=>{
+    axios.post('/customer/order_page/auth',{ordertype:'cod',token:null}).then(res=>{
         console.log(res);
     }).catch(error=>{
         console.log(error);
