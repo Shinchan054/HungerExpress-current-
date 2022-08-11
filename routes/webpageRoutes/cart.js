@@ -5,7 +5,7 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -45,7 +45,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/update', async function (req, res, next) {
     console.log('received');
-    console.log('balllllllllllllllllllllll',req.body.cid);
+
      if(!req.session.cart)
      {
         req.session.cart={
@@ -102,8 +102,6 @@ router.post('/', async function (req, res, next) {
         total_price:req.session.cart.totalPrice,
         //order_time:new Date(),
         //delivery_time:new Date(),
-
-
         });
     console.log(req.session.cart.items[req.session.cart.key[0]]);
     let an=await models.cart_item.findAll();
@@ -118,6 +116,7 @@ router.post('/', async function (req, res, next) {
             total_price:req.session.cart.items[req.session.cart.key[i]].price,
         });
     }
+    res.redirect('/customer/order_page/'+(l+1));
 
 });
 

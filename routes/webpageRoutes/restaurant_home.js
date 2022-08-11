@@ -4,7 +4,7 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -92,8 +92,42 @@ router.get('/:id',async function(req,res){
 
 });
 router.post('/', async function(req, res, next) {
- console.log("asche");
-});
+    let ans = await models.orderr.findAll();
+    let l = ans.length + 1;
+    let a = req.body.cart_id;
+    let an = await models.cart.findOne({
 
+        where: {
+            id: a
+        }
+    });
+    let r=an.restaurant_id;
+    let c=an.customer_id;
+
+    let an2=await models.restaurant_manager.findOne({
+        where:{
+            restaurant_id:r
+        }
+    }
+    );
+    console.log("allldlasldlldldla =    ",l)
+    let an3=await models.orderr.create({
+        id:l,
+        restaurant_id:r,
+        restaurant_manager_id:an2.id,
+        cart_id: a,
+        status:"Confirmed"
+
+    }
+    );
+    let an1= await models.cart.update({
+            order_id:l
+        },{
+            where:{
+                id:a
+            }
+        }
+    );
+});
 
 module.exports = router;
