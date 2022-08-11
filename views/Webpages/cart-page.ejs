@@ -2,8 +2,9 @@
 <head>
     <title>Menu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/card.css">
 </head>
-<body style="background-color: grey;">
+<body style="background-color: lightyellow;">
      <h1 class="text-center">Order Summary</h1>
      <br><br>
      <div class="d-flex justify-content-center">
@@ -38,17 +39,20 @@
         </tbody>
       </table>  
       </div>
-      <form action='/customer/cart' method="POST" style="position: relative; transform: translate(50%,50%);">
-      
-        <label for="Payment">Choose Payment type:</label>
+      <form action='/customer/cart' method="POST" style="position: relative; transform: translate(50%,50%);" class="payment-form">
+       
+    <label for="Payment">Choose Payment type:</label>
 <select name="payment-type" id="payment-type">
-    <option value="card">Card Payment</option>
   <option value="cod">Cash on delivery</option>
+    <option value="card">Card Payment</option>
 </select><br>
+   <div id="card-element" class="mt-4"></div>
       <button style="position: relative; transform:translate(200%,40%)"> Place Order </button>
       </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="/cartplus.js" type="module"></script>
     <script src="/cartminus.js" type="module"></script>
+    ,<script src="/payment.js" type="module"></script>
 </body>
