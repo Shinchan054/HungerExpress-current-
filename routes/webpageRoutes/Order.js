@@ -5,8 +5,9 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
 var initModels = require('./../../Models/init-models');
+const { Session } = require('express-session');
 var models = initModels(sequelize);
 router.get('/:id', async function (req, res, next) {
 let id=req.params.id;
@@ -19,7 +20,8 @@ let ans=await models.cart.findOne({
 console.log(ans);
 
 if(ans.order_id==null){
-    res.render('Webpages/OrderPage',{par:"your order is not confirmed yet"});
+    let url = '/images/received.gif';
+    res.render('Webpages/OrderPage',{title:"Your order has been placed" , url:url});
 
 }
 else
@@ -31,7 +33,9 @@ else
     });
     console.log(ans1);
     if(ans1.status=="Confirmed") {
-        res.render('Webpages/OrderPage', {par: "your order is confirmed"});
+         req.session.cart = null;
+         let url = '/images/cooking.gif';
+        res.render('Webpages/OrderPage', {title: "Restaurent is preparing your food", url: url});
     }
 }
 });
