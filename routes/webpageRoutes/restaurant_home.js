@@ -4,7 +4,7 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -63,7 +63,7 @@ router.get('/:id',async function(req,res){
                 cart_id: ans[i].id
             }
         });
-        console.log("ans2======", ans2)
+
            let s="";
             for (var j = 0; j < ans2.length; j++) {
                 let ans3 = await models.item.findOne({
@@ -110,7 +110,7 @@ router.post('/', async function(req, res, next) {
         }
     }
     );
-    console.log("allldlasldlldldla =    ",l)
+
     let an3=await models.orderr.create({
         id:l,
         restaurant_id:r,
