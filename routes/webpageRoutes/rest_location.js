@@ -14,7 +14,8 @@ router.get('/:id', async function (req, res, next) {
     res.render('Webpages/rest_location');
 });
 router.post('/', async function (req, res, next) {
-        lat=req.body.lat;
+
+    lat=req.body.lat;
         long=req.body.lng;
         let id=req.cookies.reid;
 
@@ -28,13 +29,14 @@ router.post('/', async function (req, res, next) {
             latitude:lat,
             longitude:long,
         });
-        let ans2=await models.customer.update({
+        let ans2=await models.restaurant.update({
             address_id:adid,
         },{
             where:{
                 id:id
             }
         });
+
     }
 );
 module.exports = router;

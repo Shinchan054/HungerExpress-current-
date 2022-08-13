@@ -18,12 +18,8 @@ router.get('/:id', async function(req, res, next) {
     });
     //st = "select location  from customer_address where id="+result.rows[0].current_address_id+";";
     //const  result1 = await pool.query(st);
-    const  result1 = await models.customer_address.findOne({
-        where: {
-            id: result.current_address_id
-        }
-    });
 
-    res.render('Webpages/customer_profile', {name:result.name,email:result.email,location:result1.location});
+
+    res.render('Webpages/customer_profile', {name:result.name,email:result.email,mob:result.mobile});
 });
 module.exports = router;

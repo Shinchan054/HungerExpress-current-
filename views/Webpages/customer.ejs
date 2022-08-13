@@ -52,10 +52,14 @@
                     <a class="nav-link active" aria-current="page" href=<%="/customer/profile/"+cid%> >Profile</a>
                   </li>
                   <li class="nav-item">
+                                           <a class="nav-link active" aria-current="page" href="/customer/location/<%=cid%>"> Set Location</a>
+                                           </li>
+                  <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/customer/cart">
                       <img src="/images/cart.png" alt="cart" height="25" width="25">
                       </a>
                     </li>
+
                 </ul>
                 <form class="d-flex input-group w-auto" action="/customer/home" method="post">
                   <input

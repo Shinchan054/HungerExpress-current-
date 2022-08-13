@@ -90,7 +90,7 @@ app.use('/customer/cart',cartRouter);
 app.use('/restaurant/dashboard',dashRouter);
 app.use('/customer/order_page',orRouter);
 app.use('/customer/location',locRouter);
-app.use('/restaurant/location',locRouter);
+app.use('/restaurant/location',rlocRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
