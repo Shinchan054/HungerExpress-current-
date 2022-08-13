@@ -15,10 +15,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    current_address_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     customer_image_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -33,6 +29,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     password: {
       type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    address_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    mobile: {
+      type: DataTypes.STRING(13),
       allowNull: true
     }
   }, {

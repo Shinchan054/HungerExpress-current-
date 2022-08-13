@@ -112,7 +112,7 @@ router.post('/', async function(req, res, next) {
     );
 
     let an3=await models.orderr.create({
-        id:l,
+        id:l+1000,
         restaurant_id:r,
         restaurant_manager_id:an2.id,
         cart_id: a,
@@ -121,7 +121,7 @@ router.post('/', async function(req, res, next) {
     }
     );
     let an1= await models.cart.update({
-            order_id:l
+            order_id:l+1000
         },{
             where:{
                 id:a

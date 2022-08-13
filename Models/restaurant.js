@@ -23,10 +23,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    current_address_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     restaurant_manager_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -34,6 +30,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'restaurant_manager',
         key: 'id'
       }
+    },
+    address_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

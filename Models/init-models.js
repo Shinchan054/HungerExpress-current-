@@ -25,12 +25,11 @@ var _pre_order = require("./pre_order");
 var _promo = require("./promo");
 var _promo_type = require("./promo_type");
 var _promo_use = require("./promo_use");
+var _rest_address = require("./rest_address");
 var _restaurant = require("./restaurant");
-var _restaurant_address = require("./restaurant_address");
 var _restaurant_image = require("./restaurant_image");
 var _restaurant_manager = require("./restaurant_manager");
 var _restaurant_review = require("./restaurant_review");
-var _rush_order = require("./rush_order");
 var _search_history = require("./search_history");
 var _service_charge = require("./service_charge");
 var _state = require("./state");
@@ -63,12 +62,11 @@ function initModels(sequelize) {
   var promo = _promo(sequelize, DataTypes);
   var promo_type = _promo_type(sequelize, DataTypes);
   var promo_use = _promo_use(sequelize, DataTypes);
+  var rest_address = _rest_address(sequelize, DataTypes);
   var restaurant = _restaurant(sequelize, DataTypes);
-  var restaurant_address = _restaurant_address(sequelize, DataTypes);
   var restaurant_image = _restaurant_image(sequelize, DataTypes);
   var restaurant_manager = _restaurant_manager(sequelize, DataTypes);
   var restaurant_review = _restaurant_review(sequelize, DataTypes);
-  var rush_order = _rush_order(sequelize, DataTypes);
   var search_history = _search_history(sequelize, DataTypes);
   var service_charge = _service_charge(sequelize, DataTypes);
   var state = _state(sequelize, DataTypes);
@@ -84,7 +82,7 @@ function initModels(sequelize) {
   admin.hasMany(promo, { as: "promos", foreignKey: "admin_id"});
   cart_item.belongsTo(cart, { as: "cart", foreignKey: "cart_id"});
   cart.hasMany(cart_item, { as: "cart_items", foreignKey: "cart_id"});
-  orderr.belongsTo(cart, { as: "cart_cart", foreignKey: "cart_id"});
+  orderr.belongsTo(cart, { as: "cart", foreignKey: "cart_id"});
   cart.hasMany(orderr, { as: "orderrs", foreignKey: "cart_id"});
   item_category.belongsTo(category, { as: "category", foreignKey: "category_id"});
   category.hasMany(item_category, { as: "item_categories", foreignKey: "category_id"});
@@ -118,8 +116,6 @@ function initModels(sequelize) {
   item.hasMany(item_image, { as: "item_images", foreignKey: "item_id"});
   item_review.belongsTo(item, { as: "item", foreignKey: "item_id"});
   item.hasMany(item_review, { as: "item_reviews", foreignKey: "item_id"});
-  cart.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
-  orderr.hasMany(cart, { as: "carts", foreignKey: "order_id"});
   delivery_address.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(delivery_address, { as: "delivery_addresses", foreignKey: "order_id"});
   invoice.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
@@ -148,8 +144,6 @@ function initModels(sequelize) {
   restaurant.hasMany(cart, { as: "carts", foreignKey: "restaurant_id"});
   category.belongsTo(restaurant, { as: "restaurant", foreignKey: "restaurant_id"});
   restaurant.hasMany(category, { as: "categories", foreignKey: "restaurant_id"});
-  restaurant_address.belongsTo(restaurant, { as: "restaurant", foreignKey: "restaurant_id"});
-  restaurant.hasMany(restaurant_address, { as: "restaurant_addresses", foreignKey: "restaurant_id"});
   restaurant_image.belongsTo(restaurant, { as: "restaurant", foreignKey: "restaurant_id"});
   restaurant.hasMany(restaurant_image, { as: "restaurant_images", foreignKey: "restaurant_id"});
   restaurant_manager.belongsTo(restaurant, { as: "restaurant_restaurant", foreignKey: "restaurant_id"});
@@ -194,12 +188,11 @@ function initModels(sequelize) {
     promo,
     promo_type,
     promo_use,
+    rest_address,
     restaurant,
-    restaurant_address,
     restaurant_image,
     restaurant_manager,
     restaurant_review,
-    rush_order,
     search_history,
     service_charge,
     state,

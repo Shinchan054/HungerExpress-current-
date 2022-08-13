@@ -27,7 +27,7 @@ router.post('/', async function(req,res,next)  {
         id: size,
         name: req.body.name,
         current_coin: 0,
-        current_address_id: 135,
+        mobile: req.body.mobile,
         customer_image_id: null,
         password: req.body.password,
         email: req.body.email

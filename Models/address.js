@@ -7,37 +7,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    location: {
-      type: DataTypes.STRING(20),
-      allowNull: false
+    longitude: {
+      type: DataTypes.REAL,
+      allowNull: true
     },
-    block: {
-      type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    road: {
-      type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    house: {
-      type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    apartment: {
-      type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    postal_code: {
-      type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    start: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    finish: {
-      type: DataTypes.DATE,
-      allowNull: false
+    latitude: {
+      type: DataTypes.REAL,
+      allowNull: true
     }
   }, {
     sequelize,

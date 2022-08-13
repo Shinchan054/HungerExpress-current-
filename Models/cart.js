@@ -37,8 +37,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     order_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-
+      allowNull: true
     }
   }, {
     sequelize,
