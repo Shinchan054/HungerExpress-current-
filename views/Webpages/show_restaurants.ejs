@@ -35,17 +35,19 @@
 
 
                <%for(var i=0 ; i<cat.length ; i++ ) { %>
-                <h1 class ="catHeader"> <%= cat[i] %> </h1>
+                <h1 class ="catHeader" style="position: relative; transform:translate(15%,0%)"> <%= cat[i] %> </h1>
                 <br><br>
                 <%for(var j=0 ; j<item[i].length ; j++ ) { %>
                 <div class="card" style="width:18 rem;">
+                      <div style="position: relative; transform:translate(20%,0%)">
                         <img src= <%="/images/"+img[i][j]+".png" %> height="200" width="300">
                         <div class="card-body">
                         <h2 class="card-title"><%= item[i][j].name %></h2>
                         <p class="card-text"> <%= item[i][j].description %> </p>
-                        <p class="card-text"> <%= item[i][j].price %> bdt</p>      
+                        <p class="card-text"> <%= item[i][j].price %> bdt</p> 
+                        </div>     
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="position: relative; transform:translate(20%,0%)">
                           <button style="font-size:24px" class="cart-btn" data-item="<%=JSON.stringify(item[i][j])%>">Add to cart <i class="fa fa-shopping-cart"></i></button>
                         </div>
                 </div>
