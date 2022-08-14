@@ -5,29 +5,15 @@
      </head>
     <body>
        <h2>Find Your Location in below Map</h2>
-        <button onclick="getlocation();"> Show Position</button>
+        <button onclick="showPos(<%=lat%>,<%=lat1%>,<%=lng%>,<%=lng1%>);"> Show Position</button>
         <div id="demo" style="width: 600px; height: 400px; margin-left: 200px;"></div>
 
         <script src="https://maps.google.com/maps/api/js?sensor=false"> </script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script type="text/javascript">
-        function getlocation(){
-            if(navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(showPos);
-                //navigator.geolocation.getCurrentPosition(showPos2);
-            }
-            else{
-                alert("Sorry! your Browser does not support Geolocation API")
-            }
-        }
 
-        function showPos(position){
-            lat = position.coords.latitude;
-            lng = position.coords.longitude;
-            axios.post('/customer/location', {
-                lat: lat,
-                lng: lng
-            });
+        function showPos(lat,lat1,lng,lng1){
+              console.log("showPos");
             var latlng = new google.maps.LatLng(lat, lng);
             var Options = {
                 center: latlng,
@@ -35,7 +21,7 @@
                 mapTypeControl: true,
                 navigationControlOptions: {style:google.maps.NavigationControlStyle.SMALL}
             }
-            var latlng1 = new google.maps.LatLng(lat+.15, lng+.1);
+            var latlng1 = new google.maps.LatLng(lat1, lng1);
             var Options1 = {
                             center: latlng1,
                             zoom: 15,

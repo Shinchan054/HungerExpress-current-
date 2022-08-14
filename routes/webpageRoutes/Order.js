@@ -21,7 +21,7 @@ console.log(ans);
 
 if(ans.order_id==null){
     let url = '/images/received.gif';
-    res.render('Webpages/OrderPage',{title:"Your order has been placed" , url:url});
+    res.render('Webpages/OrderPage',{title:"Your order has been placed" , url:url,id:id});
 
 }
 else
@@ -35,7 +35,7 @@ else
     if(ans1.status=="Confirmed") {
          req.session.cart = null;
          let url = '/images/cooking.gif';
-        res.render('Webpages/OrderPage', {title: "Restaurent is preparing your food", url: url});
+        res.render('Webpages/OrderPage', {title: "Restaurent is preparing your food", url: url,id:id});
     }
 }
 });
