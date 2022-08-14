@@ -19,8 +19,7 @@ router.get('/:id',function(req,res){
 });
 router.post('/', async function(req, res, next) {
 
-        //var qu = "select id  from category";
-        //const result = await pool.query(qu);
+
         let rest_id=req.cookies.rid;
         //console.log('hello',req.body);
         let result=await models.category.findAll();
@@ -29,21 +28,23 @@ router.post('/', async function(req, res, next) {
         //console.log('hello',rest_id,req.body.rows);
         // qu ="INSERT INTO category(id, restaurant_id, name)VALUES ("+l+","+rest_id+",'"+req.body.name+"')";
         // const result1 = await pool.query(qu);
-  
-        models.category.create({
-            id : l,
-            restaurant_id : rest_id,
-            name : req.body.name
-        }).then(function(result){
-            console.log('hello',result);
-            res.redirect('/restaurant/'+rest_id);
+        let result1=await models.category.findOne({
+            where: {
+                restaurant_id: rest_id,
+                name: req.body.name
+            }
+        });
+
+        if(result1==null)
+        {
+            let ans= await models.category.create({
+                id : l,
+                restaurant_id : rest_id,
+                name : req.body.name
+            });
         }
-        ).catch(function(err){
-            console.log('error',err);
-        }
-        );
         
-        res.redirect("/restaurant/home/"+rest_id)
+            res.redirect("/restaurant/home/"+rest_id)
 
 });
 

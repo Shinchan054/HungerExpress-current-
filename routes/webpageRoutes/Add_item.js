@@ -22,8 +22,7 @@ router.get('/:id', async function(req, res, next) {
 
     var id=req.params.id;
 
-    //var q="select name,id from category where restaurant_id = "+id;
-    //const data=await pool.query(q);
+
     const data=await models.category.findAll({
 
         where: {
@@ -45,8 +44,7 @@ router.post('/', async function(req, res, next) {
     let img = req.files;
     let rest_id=req.cookies.id;
     console.log("hello",req.cookies.id);
-    //var q="select id from item_image";
-    //const data=await pool.query(q);
+
     const data=await models.item_image.findAll();
     let l=data.length+1;
     await img.image.mv(ImageFolder + l + ".png", async function (err) {
@@ -61,37 +59,43 @@ router.post('/', async function(req, res, next) {
 
     const data1=await models.item.findAll();
     let l1=data1.length+101;
-
-    const data2=await models.item.create({
-        id:l1,
-        name:inp.name,
-        description:inp.description,
-        count:inp.count,
-        rating:1,
-        restaurant_id:rest_id,
-        price:inp.price1,
-        avail:1
+    let ans=await models.item.findOne({
+        where: {
+            restaurant_id: rest_id,
+            name: inp.name
+        }
     });
+    if(ans==null) {
+        const data2 = await models.item.create({
+            id: l1,
+            name: inp.name,
+            description: inp.description,
+            count: inp.count,
+            rating: 1,
+            restaurant_id: rest_id,
+            price: inp.price1,
+            avail: 1
+        });
 
 
-    const data3=await models.item_image.create({
-        id:l,
-        image_id:l,
-        item_id:l1
-    });
+        const data3 = await models.item_image.create({
+            id: l,
+            image_id: l,
+            item_id: l1
+        });
 
-    //const d=await pool.query("select id from item_category;");
-    const d=await models.item_category.findAll();
-    let m=d.length+1;
-    //q="INSERT INTO public.item_category(id, item_id, category_id)VALUES ("+m+","+l1+","+inp.category+");";
-    //const data4=await pool.query(q);
-const data4=await models.item_category.create({
-    id:m,
-    item_id:l1,
-    category_id:inp.category
 
-});
+        const d = await models.item_category.findAll();
+        let m = d.length + 1;
+        const data4 = await models.item_category.create({
+            id: m,
+            item_id: l1,
+            category_id: inp.category
 
+        });
+    }
+    else
+        console.log("item already exists");
     res.redirect("/restaurant/home/"+req.cookies.id);
 });
 
