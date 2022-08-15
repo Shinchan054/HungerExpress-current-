@@ -1,12 +1,8 @@
-let order = document.querySelectorAll('.confirm-btn');
-
-
-
-function OrderConf(cart_id){
-
-    axios.post('/restaurant/home',{cart_id:cart_id}).then(res=>{
+let order = document.querySelectorAll('.rider-btn');
+function OrderCon(cart_id){
+    axios.post('/restaurant/home/finish',{cart_id:cart_id}).then(res=>{
         console.log(res);
-    })
+    });
 };
 
 order.forEach((btn) => {
@@ -14,7 +10,7 @@ order.forEach((btn) => {
         console.log("clicked");
         let cart_id = JSON.parse(btn.dataset.cart_id);
         console.log('cart id ==',cart_id);
-        OrderConf(cart_id);
+        OrderCon(cart_id);
 
-    })
+    });
 });

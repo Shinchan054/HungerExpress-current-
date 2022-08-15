@@ -30,6 +30,8 @@ var _restaurant = require("./restaurant");
 var _restaurant_image = require("./restaurant_image");
 var _restaurant_manager = require("./restaurant_manager");
 var _restaurant_review = require("./restaurant_review");
+var _rider = require("./rider");
+var _rider_address = require("./rider_address");
 var _search_history = require("./search_history");
 var _service_charge = require("./service_charge");
 var _state = require("./state");
@@ -67,6 +69,8 @@ function initModels(sequelize) {
   var restaurant_image = _restaurant_image(sequelize, DataTypes);
   var restaurant_manager = _restaurant_manager(sequelize, DataTypes);
   var restaurant_review = _restaurant_review(sequelize, DataTypes);
+  var rider = _rider(sequelize, DataTypes);
+  var rider_address = _rider_address(sequelize, DataTypes);
   var search_history = _search_history(sequelize, DataTypes);
   var service_charge = _service_charge(sequelize, DataTypes);
   var state = _state(sequelize, DataTypes);
@@ -104,7 +108,7 @@ function initModels(sequelize) {
   customer_image.hasMany(customer, { as: "customers", foreignKey: "customer_image_id"});
   orderr.belongsTo(delivery_address, { as: "delivery_address_delivery_address", foreignKey: "delivery_address_id"});
   delivery_address.hasMany(orderr, { as: "orderrs", foreignKey: "delivery_address_id"});
-  orderr.belongsTo(invoice, { as: "invoice_invoice", foreignKey: "invoice_id"});
+  orderr.belongsTo(invoice, { as: "invoice", foreignKey: "invoice_id"});
   invoice.hasMany(orderr, { as: "orderrs", foreignKey: "invoice_id"});
   cart_item.belongsTo(item, { as: "item", foreignKey: "item_id"});
   item.hasMany(cart_item, { as: "cart_items", foreignKey: "item_id"});
@@ -118,8 +122,6 @@ function initModels(sequelize) {
   item.hasMany(item_review, { as: "item_reviews", foreignKey: "item_id"});
   delivery_address.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(delivery_address, { as: "delivery_addresses", foreignKey: "order_id"});
-  invoice.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
-  orderr.hasMany(invoice, { as: "invoices", foreignKey: "order_id"});
   item_review.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(item_review, { as: "item_reviews", foreignKey: "order_id"});
   payment_info.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
@@ -193,6 +195,8 @@ function initModels(sequelize) {
     restaurant_image,
     restaurant_manager,
     restaurant_review,
+    rider,
+    rider_address,
     search_history,
     service_charge,
     state,

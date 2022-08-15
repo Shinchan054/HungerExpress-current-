@@ -1,32 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('invoice', {
+  return sequelize.define('rider_address', {
     id: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    vat_amount: {
+    longitude: {
       type: DataTypes.REAL,
-      allowNull: false
+      allowNull: true
     },
-    delivery_fee: {
+    latitude: {
       type: DataTypes.REAL,
-      allowNull: false
-    },
-    total_price: {
-      type: DataTypes.REAL,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'invoice',
+    tableName: 'rider_address',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "invoice_pkey",
+        name: "rider_address_pkey",
         unique: true,
         fields: [
           { name: "id" },

@@ -77,6 +77,10 @@ module.exports = function(sequelize, DataTypes) {
     status: {
       type: DataTypes.STRING(50),
       allowNull: true
+    },
+    rider_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

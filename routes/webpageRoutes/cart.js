@@ -62,7 +62,7 @@ router.post('/update', async function (req, res, next) {
      }
 
      let cart = req.session.cart;
-       console.log(req.body.item.name);
+
          if(!cart.items[req.body.item.name])
          {
             cart.items[req.body.item.name] ={
@@ -86,7 +86,7 @@ router.post('/update', async function (req, res, next) {
             cart.totalPrice = cart.totalPrice + req.body.item.price;
 
          }
-         console.log('hello',cart);
+
 
           res.json({ cart : req.session.cart});
 });
@@ -131,7 +131,7 @@ router.post('/', async function (req, res, next) {
             currency: 'bdt',
             description: 'test charge'
         }).then(async function(){
-            console.log("dhuksi");
+
             let ans= await models.cart.create({
                 id:l+1,
                 customer_id:req.session.cart.customer_id,
@@ -184,8 +184,7 @@ router.post('/plus', async function (req, res, next) {
        }
     }
     let cart = req.session.cart;
-    console.log(req.body.name);
-    console.log(req.body.price);
+
         if(!cart.items[req.body.name])
         {
            cart.items[req.body.name] ={
@@ -204,13 +203,13 @@ router.post('/plus', async function (req, res, next) {
                 cart.totalQty = cart.totalQty + 1;
                 cart.totalPrice = cart.totalPrice + req.body.price;
         }
-        console.log('hello',cart);
+
         res.json({ cart : req.session.cart});
 } );
 
 
 router.post('/minus', async function (req, res, next) {
-    console.log('received');
+
         let cart = req.session.cart;
         if(cart.items[req.body.name])
         {
@@ -226,7 +225,7 @@ router.post('/minus', async function (req, res, next) {
                 cart.items[req.body.name].price = cart.items[req.body.name].price - req.body.price;
             }
         }
-        console.log('minus',cart);
+
 
         if(cart.totalQty==0)
         {

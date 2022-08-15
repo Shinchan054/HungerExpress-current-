@@ -37,6 +37,11 @@ else
          let url = '/images/cooking.gif';
         res.render('Webpages/OrderPage', {title: "Restaurent is preparing your food", url: url,id:id});
     }
+    if(ans1.status=='Picked Up')
+    {
+        let url = '/images/cooking.gif';
+        res.render('Webpages/OrderPage', {title: "Rider Picked your order", url: url,id:id});
+    }
 }
 });
 
