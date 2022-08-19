@@ -11,7 +11,7 @@ var models = initModels(sequelize);
 
 router.get('/',function(req,res){
 
-    console.log('hello login');
+
     res.render('Webpages/rider_log');
 
 
@@ -31,13 +31,11 @@ router.post('/', async function(req,res,next)  {
             password: pass
         }
     });
-    //console.log(result);
 
 
     if(result!=null)
     {   res.cookie("rider_id",result.id);
-        res.redirect("/rider/home");
-
+        res.redirect("/rider/home/"+result.id);
 
     }
     res.render('Webpages/rider_log');

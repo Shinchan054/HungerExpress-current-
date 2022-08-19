@@ -73,6 +73,8 @@ var locRouter = require("./routes/webpageRoutes/cust_location");
 var rlocRouter = require("./routes/webpageRoutes/rest_location");
 var orrRouter = require("./routes/webpageRoutes/location");
 var orfinRouter = require("./routes/webpageRoutes/rest_finish_order");
+var riderRouter = require("./routes/webpageRoutes/rider_home");
+var riderloginRouter = require("./routes/webpageRoutes/rider_log");
 app.use(upload());
 app.use(cookieParser());
 
@@ -95,6 +97,8 @@ app.use('/customer/location',locRouter);
 app.use('/restaurant/location',rlocRouter);
 app.use('/customer/order_loc',orrRouter);
 app.use('/restaurant/finished_order',orfinRouter);
+app.use('/rider/home',riderRouter);
+app.use('/rider/login',riderloginRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
