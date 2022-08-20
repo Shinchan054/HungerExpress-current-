@@ -22,56 +22,64 @@ router.get('/:id',async function(req,res){
     const item_name=[];
     const cust_name=[];
     const cart_id=[];
-    let order=await models.orderr.findAll({
+    let or=await models.TempRider.findAll({
         where:{
-            rider_id:ids,
-            status:"Confirmed"
+            rider_id:ids
         }
     });
-    for(var i=0;i<order.length;i++) {
-        let ans=await models.cart.findOne({
+    for(let i=0;i<or.length;i++) {
+        let order = await models.orderr.findOne({
             where: {
-                id: order[i].cart_id
+                id: or[i].order_id,
+                status: 'Confirmed'
             }
         });
-        let ans3 = await models.cart.findOne({
-            where: {
-                id: ans.id
-            }
-        });
-        cart_id.push(ans.id);
-        let ans1 = await models.customer.findOne({
-            where: {
-                id: ans3.customer_id
-            }
-        });
-
-        cust_name.push(ans1.name);
-
-
-        let ans2 = await models.cart_item.findAll({
-            where: {
-                cart_id: ans.id
-            }
-        });
-
-        let s="";
-        for (var j = 0; j < ans2.length; j++) {
-            let ans3 = await models.item.findOne({
+        if(order==null)
+            continue;
+            let ans = await models.cart.findOne({
                 where: {
-                    id: ans2[j].item_id
+                    id: order.cart_id
                 }
-
+            });
+            let ans3 = await models.cart.findOne({
+                where: {
+                    id: ans.id
+                }
+            });
+            cart_id.push(ans.id);
+            let ans1 = await models.customer.findOne({
+                where: {
+                    id: ans3.customer_id
+                }
             });
 
-            s=s+" "+ans3.name+" - count:"+ans2[j].count;
+            cust_name.push(ans1.name);
+
+
+            let ans2 = await models.cart_item.findAll({
+                where: {
+                    cart_id: ans.id
+                }
+            });
+
+            let s = "";
+            for (var j = 0; j < ans2.length; j++) {
+                let ans3 = await models.item.findOne({
+                    where: {
+                        id: ans2[j].item_id
+                    }
+
+                });
+
+                s = s + " " + ans3.name + " - count:" + ans2[j].count;
+
+
+            }
+            item_name.push(s);
 
 
         }
-        item_name.push(s);
 
-
-    }
     const item_name1=[];
     const cust_name1=[];
     const cart_id1=[];
@@ -132,25 +140,39 @@ router.get('/:id',async function(req,res){
 
 });
 router.post('/',async function(req,res) {
-let cart_id=req.body.cart_id;
-let order = await models.orderr.findOne({
+    let cart_id = req.body.cart_id;
+    let rider_id = req.body.rider_id;
+    let order = await models.orderr.findOne({
 
-    where: {
-        cart_id:cart_id,
+        where: {
+            cart_id: cart_id,
 
-}});
-
-let check=await models.orderr.update({
-    status:"Picked Up"
-}
-,{
-    where:{
-        id:order.id
-
-    }
+        }
     });
+    if (order.status == "Picked Up")  {
+console.log("Already asigned");
 
+}
+    else {
+        let check = await models.orderr.update({
+                status: "Picked Up",
+                rider_id: rider_id
+            }
+            , {
+                where: {
+                    id: order.id
+
+                }
+            });
+
+
+        let ans = await models.TempRider.destroy({
+            where: {
+                order_id: order.id
+            }
+        });
     }
+}
 );
 router.post('/delivered',async function(req,res) {
         let cart_id=req.body.cart_id;
@@ -173,4 +195,21 @@ router.post('/delivered',async function(req,res) {
 
     }
 );
+router.post('/rejected',async function(req,res) {
+
+    let cart_id=req.body.cart_id;
+    let order = await models.orderr.findOne({
+        where: {
+            cart_id:cart_id,
+
+        }});
+
+    let ans = await models.TempRider.destroy({
+        where: {
+            order_id: order.id,
+            rider_id:req.body.rider_id
+        }
+    });
+
+});
     module.exports = router;

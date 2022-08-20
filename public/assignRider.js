@@ -61,6 +61,8 @@ async function assign(id)
     console.log(result.length);
     dist=[];
     let a,b=65000;
+    var ri=await models.TempRider.findAll();
+    let r=ri.length;
     let or=await models.orderr.findOne(
         {
             where:{
@@ -78,24 +80,20 @@ async function assign(id)
     {
         let ans=await Dist(rest.id,result[i].id);
         dist.push(ans);
-        if(ans<5&&ans<b)
+        if(ans<5)
         {
-            a=result[i].id;
-            b=ans;
-            console.log('sfkldsdkfkdsdslfsdf  =======',a);
-        }
+        let rid=await models.TempRider.create(
+            {
+                id:r,
+                rider_id:result[i].id,
+                order_id:id
 
-    }
-
-    console.log('tttttttttsfkldsdkfkdsdslfsdf  =======',a);
-    result=await models.orderr.update({
-        rider_id:a
-    }
-        ,{
-            where:{
-                id:id
             }
+        );
+        r++;
+
         }
-    );
+
+    }
 }
 module.exports = assign;

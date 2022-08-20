@@ -26,7 +26,7 @@
     "pg": "^8.7.3",
     "pg-format": "^1.0.4",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.21.3",
+    "sequelize": "^6.21.4",
     "sequelize-auto": "^0.8.8",
     "sqlite3": "^5.0.11",
     "stripe": "^10.1.0"

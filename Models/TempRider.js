@@ -1,27 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('rider_address', {
+  return sequelize.define('TempRider', {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    latitude: {
-      type: DataTypes.REAL,
+    order_id: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
-    longitude: {
-      type: DataTypes.REAL,
+    rider_id: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'rider_address',
+    tableName: 'TempRider',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "rider_address_pkey",
+        name: "TempRider_pkey",
         unique: true,
         fields: [
           { name: "id" },

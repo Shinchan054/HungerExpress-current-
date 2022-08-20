@@ -1,4 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
+var _TempRider = require("./TempRider");
 var _addon = require("./addon");
 var _address = require("./address");
 var _admin = require("./admin");
@@ -38,6 +39,7 @@ var _state = require("./state");
 var _voucher = require("./voucher");
 
 function initModels(sequelize) {
+  var TempRider = _TempRider(sequelize, DataTypes);
   var addon = _addon(sequelize, DataTypes);
   var address = _address(sequelize, DataTypes);
   var admin = _admin(sequelize, DataTypes);
@@ -164,6 +166,7 @@ function initModels(sequelize) {
   voucher.hasMany(orderr, { as: "orderrs", foreignKey: "voucher_id"});
 
   return {
+    TempRider,
     addon,
     address,
     admin,
