@@ -194,6 +194,7 @@ router.post('/', async function(req, res, next) {
 });
 router.post('/finish', async function(req, res, next) {
     let a = req.body.cart_id;
+
     let an = await models.cart.findOne({
 
         where: {

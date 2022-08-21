@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const Pool = require('pg').Pool;
-
+//const Pool = require('pg').Pool;
+let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
  var assign=require('./../../public/assignRider');
