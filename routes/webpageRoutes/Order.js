@@ -37,10 +37,21 @@ else
          let url = '/images/cooking.gif';
         res.render('Webpages/OrderPage', {title: "Restaurent is preparing your food", url: url,id:id});
     }
-    if(ans1.status=='Picked Up')
+    else if(ans1.status=="Finished"){
+
+        let url = '/images/Finished.gif';
+        res.render('Webpages/OrderPage', {title: "Your food is ready", url: url,id:id});
+    }
+    else if(ans1.status=='Picked Up')
     {
-        let url = '/images/cooking.gif';
-        res.render('Webpages/OrderPage', {title: "Rider Picked your order", url: url,id:id});
+        let url = '/images/rider.gif';
+        res.render('Webpages/OrderPage', {title: "Rider Picked your order.Your food is on the way.", url: url,id:id});
+    }
+
+    else if(ans1.status=='Delivered')
+    {
+        let url = '/images/delivered.gif';
+        res.render('Webpages/OrderPage', {title: "Your Food has been delivered.", url: url,id:id});
     }
 }
 });

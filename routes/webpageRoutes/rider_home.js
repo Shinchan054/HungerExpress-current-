@@ -31,7 +31,7 @@ router.get('/:id',async function(req,res){
         let order = await models.orderr.findOne({
             where: {
                 id: or[i].order_id,
-                status: 'Confirmed'
+                status: 'Finished'
             }
         });
         if(order==null)
