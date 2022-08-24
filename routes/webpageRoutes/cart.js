@@ -112,7 +112,7 @@ router.post('/', async function (req, res, next) {
         let ls=an.length+1;
         for(var i=0;i<req.session.cart.key.length;i++){
             let ans=await models.cart_item.create({
-                id:ls+i,
+                id:ls+i+1000,
                 cart_id:l+1,
                 item_id:req.session.cart.items[req.session.cart.key[i]].id,
                 //item_name:req.session.cart.items[req.session.cart.key[i]].name,

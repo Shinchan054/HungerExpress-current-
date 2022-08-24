@@ -95,6 +95,7 @@ where:{
             status:"Confirmed"
         }
     });
+    console.log(ansn);
     const item_name1=[];
     const cust_name1=[];
     const cart_id1=[];
@@ -121,7 +122,7 @@ where:{
 
         let ans2 = await models.cart_item.findAll({
             where: {
-                cart_id: ansn[i].id
+                cart_id: ansn[i].cart_id
             }
         });
 
