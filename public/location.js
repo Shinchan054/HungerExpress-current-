@@ -11,10 +11,7 @@ let l1 = document.getElementById('lng');
 let l2 = document.getElementById('lng1');
  let lat1 = document.getElementById('lat');
  let lat2 = document.getElementById('lat1');
-console.log(l1.dataset.lng);
-console.log(l2.dataset.lng1);
-console.log(lat1.dataset.lat);
-console.log(lat2.dataset.lat1);
+
 
 let map = new L.map('map', mapoptions);
 let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
@@ -25,3 +22,21 @@ marker.addTo(map);
 let marker1 = new L.marker([23.731473, 90.376415]);
 marker1.addTo(map);
 
+
+var latlngs = [
+    [lat1.dataset.lat, l1.dataset.lng],
+    [23.731473, 90.376415]
+];
+
+// var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+// // zoom the map to the polyline
+// map.fitBounds(polyline.getBounds());
+
+var route = L.Routing.control({
+    waypoints: [
+        L.latLng(lat1.dataset.lat, l1.dataset.lng),
+        L.latLng(23.731473, 90.376415)
+    ],
+    routeWhileDragging: true,
+}).addTo(map);
