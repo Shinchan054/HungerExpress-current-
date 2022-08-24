@@ -5,7 +5,7 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
 const stripe = require('stripe')(process.env.key)
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -130,7 +130,9 @@ router.post('/', async function (req, res, next) {
             source : req.body.token,
             currency: 'bdt',
             description: 'test charge'
-        }).then(async function(){
+        }).then(async function(res){
+
+            console.log(res.receipt_url);
 
             let ans= await models.cart.create({
                 id:l+1,
