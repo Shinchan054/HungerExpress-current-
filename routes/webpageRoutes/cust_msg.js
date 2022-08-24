@@ -3,7 +3,7 @@ var router = express.Router();
 const url = require('url');
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);

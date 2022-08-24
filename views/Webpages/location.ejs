@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <head>
       <title>Geolocation API</title>
@@ -11,7 +11,7 @@
        
         <div class="d-flex justify-content-center" style="position: relative; transform : translate(0%,10%)">
         <div id="message-container"></div>
-     <form id="send-container">
+        <form id="send-container">
         <input type="text" id="message-input">
         <button type="submit" id="send-button">Send</button>
      </form>
@@ -19,9 +19,9 @@
      <div data-name="Rider" id="saved-data"></div>
      <script type="text/javascript" src="http://localhost:3000/socket.io/socket.io.js"></script>
      <script type="text/javascript" src="/chat.js"></script>
-        <script src="https://maps.google.com/maps/api/js?sensor=false"> </script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script type="text/javascript">
+    <script src="https://maps.google.com/maps/api/js?sensor=false"> </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
         function showPos(lat,lat1,lng,lng1){
               console.log("showPos");
             var latlng = new google.maps.LatLng(lat, lng);
@@ -82,4 +82,30 @@
          </script>
          <script src="/location.js"></script>
     </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+    <style>
+        #map {position: relative; transform: translate(80%,10%) ; height: 650px; width: 650px;}
+    </style>
+</head>
+<body>
+         
+  <div id="map"></div>
+
+
+  <div id="lng" data-lng="<%=JSON.stringify(lng)%>"></div>
+  <div id="lng1" data-lng1="<%=JSON.stringify(lng1)%>"></div>
+  <div id="lat" data-lat="<%=JSON.stringify(lat)%>"></div>
+  <div id="lat1" data-lat1="<%=JSON.stringify(lat1)%>"></div>
+    <script src="/location.js"></script>
+</body>
 </html>

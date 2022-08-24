@@ -99,6 +99,5 @@ io.on('connection', function(socket){
       console.log(message);
       socket.emit('chat-message',message);
       socket.broadcast.emit('chat-message',message);
-    })
-}
-);
+    });
+});
