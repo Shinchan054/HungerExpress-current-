@@ -100,7 +100,7 @@ app.use('/restaurant/dashboard',dashRouter);
 app.use('/customer/order_page',orRouter);
 app.use('/customer/location',locRouter);
 app.use('/restaurant/location',rlocRouter);
-app.use('/customer/order_loc',orrRouter);
+app.use('/order_loc',orrRouter);
 app.use('/restaurant/finished_order',orfinRouter);
 app.use('/rider/home',riderRouter);
 app.use('/rider/login',riderloginRouter);

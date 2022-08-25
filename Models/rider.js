@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     Name: {
-      type: "\"CHAR\"",
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     mobile: {

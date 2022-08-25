@@ -76,6 +76,8 @@
             <th>Order</th>
             <th>Customer</th>
             <th>Status</th>
+            <th>Map</th>
+            <th>Massage</th>
             </tr>
             <% for(var i=0;i< cust_name1.length;i++){ %>
 
@@ -86,7 +88,8 @@
 
             <button style="font-size:12px" class="rconf-btn" data-cart_id="<%=JSON.stringify(cart_id1[i])%>">Delivered<i class="fa fa-shopping-cart"></i></button>
               </td>
-              <td></td>
+              <td><a class="nav-link active" aria-current="page" href="/order_loc/<%=cart_id1[i]%>">Track order</a></td>
+              <td><a class="nav-link active" aria-current="page" href="/rider/msg/<%=cart_id1[i]%>">Massage</a></td>
             </tr>
             <% }%>
           </table>

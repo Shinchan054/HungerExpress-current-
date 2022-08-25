@@ -6,7 +6,7 @@ let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 var assign=require('./../../public/assignRider');
-
+var CalculateDelFee=require('./../../public/CalculateDeliveryfee');
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 
@@ -186,7 +186,10 @@ router.post('/', async function(req, res, next) {
             }
         }
     );
-    assign(l+1000);
+    let rep1=await assign(l+1000);
+    let rep= await CalculateDelFee(a);
+    console.log("done");
+
 });
 router.post('/finish', async function(req, res, next) {
     let a = req.body.cart_id;

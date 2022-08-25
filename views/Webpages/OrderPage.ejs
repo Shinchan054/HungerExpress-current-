@@ -11,8 +11,9 @@
     </div>
     <div class="d-flex justify-content-center" style="position: relative; transform:translate(0%,100%)">
             <% if (status == 'Picked Up') { %>
-              <p><%=mob%></p>
-             <a class="nav-link active" aria-current="page" href="/customer/order_loc/<%=id%>">Track order</a>
+              <p>Contact Number: <%=mob%></p>
+             <a class="nav-link active" aria-current="page" href="/order_loc/<%=id%>">Track order</a>
+             <a class="nav-link active" aria-current="page" href="/customer/msg/<%=id%>">Chat with Rider</a>
         <%}%>
         </div>
         <div class="d-flex justify-content-center" style="position: relative; transform:translate(0%,100%)">

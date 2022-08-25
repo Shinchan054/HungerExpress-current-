@@ -10,15 +10,16 @@ var models = initModels(sequelize);
 
 router.get('/:id',async function(req,res){
     let id=req.params.id;
-    res.cookie("order_id",id);
-    let order=await models.orderr.findOne({
+    res.cookie("rcart_id",id);
+
+    let cart=await models.cart.findOne({
         where:{
             id:id
         }
     });
-    let cart=await models.cart.findOne({
+    let order=await models.orderr.findOne({
         where:{
-            id:order.cart_id
+            cart_id:id
         }
     });
     let cust=await models.customer.findOne({
@@ -48,17 +49,18 @@ router.get('/:id',async function(req,res){
 
 });
 router.post('/',async function(req,res){
-    let id=req.cookies.order_id;
-    let order=await models.orderr.findOne({
+    let id=req.cookies.rcart_id;
+    let cart=await models.cart.findOne({
         where:{
             id:id
         }
     });
-    let cart=await models.cart.findOne({
+    let order=await models.orderr.findOne({
         where:{
-            id:order.cart_id
+            cart_id:id
         }
     });
+
     let cust=await models.customer.findOne({
         where:{
             id:cart.customer_id,
