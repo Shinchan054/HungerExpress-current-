@@ -20,6 +20,11 @@ function updateCart(item,rid, cid){
 addtocart.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         console.log("clicked");
+        
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1500);
+
          let item = JSON.parse(btn.dataset.item);
          console.log(item);
           updateCart(item,Number(rest_id.dataset.rid),Number(cust_id.dataset.cid));

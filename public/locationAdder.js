@@ -148,6 +148,9 @@ let config = {
     },
   
     onSubmit: ({ object }) => {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
       const { display_name } = object.properties;
       const cord = object.geometry.coordinates;
       // custom id for marker

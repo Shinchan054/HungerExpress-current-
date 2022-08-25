@@ -1,70 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-    <head>
-      <title>Geolocation API</title>
-     </head>
-    <body>
-       <h2>Find Your Location in below Map</h2>
-        <button onclick="getlocation();"> Show Position</button>
-        <div id="demo" style="width: 600px; height: 400px; margin-left: 200px;"></div>
-
-        <script src="https://maps.google.com/maps/api/js?sensor=false"> </script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script type="text/javascript">
-        function getlocation(){
-            if(navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(showPos);
-                //navigator.geolocation.getCurrentPosition(showPos2);
-            }
-            else{
-                alert("Sorry! your Browser does not support Geolocation API")
-            }
-        }
-
-        function showPos(position){
-            lat = position.coords.latitude;
-            lng = position.coords.longitude;
-            axios.post('/customer/location', {
-                lat: lat,
-                lng: lng
-            });
-            var latlng = new google.maps.LatLng(lat, lng);
-            var Options = {
-                center: latlng,
-                zoom: 15,
-                mapTypeControl: true,
-                navigationControlOptions: {style:google.maps.NavigationControlStyle.SMALL}
-            }
-
-            var maps = new google.maps.Map(document.getElementById("demo"), Options);
-            var markers =new google.maps.Marker({position:latlng, map:maps, title:"You are here!"});
-
-        }
-
-             function showErr(error) {
-              switch(error.code){
-              case error.PERMISSION_DENIED:
-             alert("User denied the request for Geolocation API.");
-              break;
-             case error.POSITION_UNAVAILABLE:
-             alert("USer location information is unavailable.");
-            break;
-            case error.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
-           case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
-           }
-        }
-
-
-
-
-         </script>
-    </body>
-</html> -->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,15 +11,58 @@
   href="https://cdn.jsdelivr.net/gh/tomik23/autocomplete@1.8.3/dist/css/autocomplete.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
-<style>
+    <script type="text/javascript" src="dist/snackbar.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/snackbar.min.css" />
+    <style>
+      #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+      }
+      
+      #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+      
+      @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;} 
+        to {bottom: 30px; opacity: 1;}
+      }
+      
+      @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+      }
+      
+      @-webkit-keyframes fadeout {
+        from {bottom: 30px; opacity: 1;} 
+        to {bottom: 0; opacity: 0;}
+      }
+      
+      @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+      }
     #map {position: relative; transform: translate(80%,0%) ; height: 650px; width: 650px;}
 </style>
 </head>
-<body>
-    <h1 class="text-center">Search your location</h1>
+<body style="background-color: grey;">
+    <h1 style="text-align: center;">Search your location in the search-box</h1>
     <div id="map"></div>
 
-
+    <div id="snackbar">Your location has been added successfully</div>
       <script src="https://cdn.jsdelivr.net/gh/tomik23/autocomplete@1.8.3/dist/js/autocomplete.min.js"></script>
       <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <script src="/locationAdder.js"></script>
