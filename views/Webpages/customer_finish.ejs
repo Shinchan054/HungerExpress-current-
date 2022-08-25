@@ -11,6 +11,7 @@
             <th>Order</th>
             <th>Customer</th>
             <th>Status</th>
+            <th>Date</th>
             </tr>
             <% for(var i=0;i< cust_name1.length;i++){ %>
 
@@ -18,7 +19,7 @@
              <td><%= item_name1[i]%> </td>
               <td><%=cust_name1[i]%></td>
               <td>finished   </td>
-              <td></td>
+              <td><%=time[i]%></td>
             </tr>
             <% }%>
           </table>

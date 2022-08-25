@@ -17,6 +17,14 @@ module.exports = function(sequelize, DataTypes) {
     address_id: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    Name: {
+      type: "\"CHAR\"",
+      allowNull: true
+    },
+    mobile: {
+      type: DataTypes.STRING(15),
+      allowNull: true
     }
   }, {
     sequelize,

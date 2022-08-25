@@ -4,7 +4,7 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 var assign=require('./../../public/assignRider');
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -164,8 +164,35 @@ console.log("Already asigned");
 
                 }
             });
+        let restaurant = await models.restaurant.findOne({
+            where: {
+                restaurant_manager_id: order.restaurant_manager_id
+            }
+        });
+        let rest_address = await models.rest_address.findOne({
+            where: {
+                id: restaurant.address_id
+            }
+        });
+        let rider = await models.rider.findOne({
+            where: {
+                id: rider_id
+            }
+        });
+        let rider_address = await models.rider_address.findOne({
+           where:{
+               id:rider.address_id
+           }
+        });
+        let update_Rider_address= await models.rider_address.update({
+            latitude:rest_address.latitude,
+            longitude:rest_address.longitude
+        },{
+            where:{
+                id:rider.address_id
 
-
+            }
+        });
         let ans = await models.TempRider.destroy({
             where: {
                 order_id: order.id
@@ -182,9 +209,12 @@ router.post('/delivered',async function(req,res) {
                 cart_id:cart_id,
 
             }});
-
+        //console.log(new Date().toLocaleString().slice(0, 19).replace('T', ' '));
         let check=await models.orderr.update({
-                status:"Delivered"
+                status:"Delivered",
+                //Delivery_time:Sequelize.fn('now')
+                Delivery_time:new Date().toLocaleString().slice(0, 19).replace('T', ' ')
+
             }
             ,{
                 where:{

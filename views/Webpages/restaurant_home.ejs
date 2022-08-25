@@ -105,6 +105,7 @@
             <th>Order</th>
             <th>Customer</th>
             <th>Status</th>
+            <th> Order Time</th>
             </tr>
             <% for(var i=0;i< cust_name1.length;i++){ %>
 
@@ -115,7 +116,7 @@
 
             <button style="font-size:12px" class="rider-btn" data-cart_id="<%=JSON.stringify(cart_id1[i])%>">Prepared<i class="fa fa-shopping-cart"></i></button>
               </td>
-              <td></td>
+              <td><%=time[i]%></td>
             </tr>
             <% }%>
           </table>

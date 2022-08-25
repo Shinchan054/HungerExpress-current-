@@ -112,8 +112,6 @@ function initModels(sequelize) {
   customer_image.hasMany(customer, { as: "customers", foreignKey: "customer_image_id"});
   orderr.belongsTo(delivery_address, { as: "delivery_address_delivery_address", foreignKey: "delivery_address_id"});
   delivery_address.hasMany(orderr, { as: "orderrs", foreignKey: "delivery_address_id"});
-  orderr.belongsTo(invoice, { as: "invoice", foreignKey: "invoice_id"});
-  invoice.hasMany(orderr, { as: "orderrs", foreignKey: "invoice_id"});
   cart_item.belongsTo(item, { as: "item", foreignKey: "item_id"});
   item.hasMany(cart_item, { as: "cart_items", foreignKey: "item_id"});
   item_addon.belongsTo(item, { as: "item", foreignKey: "item_id"});
@@ -131,9 +129,9 @@ function initModels(sequelize) {
   payment_info.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(payment_info, { as: "order_payment_infos", foreignKey: "order_id"});
   promo_use.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
-  orderr.hasMany(promo_use, { as: "order_promo_uses", foreignKey: "order_id"});
+  orderr.hasMany(promo_use, { as: "promo_uses", foreignKey: "order_id"});
   restaurant_review.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
-  orderr.hasMany(restaurant_review, { as: "order_restaurant_reviews", foreignKey: "order_id"});
+  orderr.hasMany(restaurant_review, { as: "restaurant_reviews", foreignKey: "order_id"});
   state.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
   orderr.hasMany(state, { as: "states", foreignKey: "order_id"});
   voucher.belongsTo(orderr, { as: "order", foreignKey: "order_id"});
@@ -144,8 +142,6 @@ function initModels(sequelize) {
   promo.hasMany(promo_use, { as: "promo_uses", foreignKey: "promo_id"});
   promo.belongsTo(promo_type, { as: "promo_type", foreignKey: "promo_type_id"});
   promo_type.hasMany(promo, { as: "promos", foreignKey: "promo_type_id"});
-  orderr.belongsTo(promo_use, { as: "promo_use", foreignKey: "promo_use_id"});
-  promo_use.hasMany(orderr, { as: "orderrs", foreignKey: "promo_use_id"});
   cart.belongsTo(restaurant, { as: "restaurant", foreignKey: "restaurant_id"});
   restaurant.hasMany(cart, { as: "carts", foreignKey: "restaurant_id"});
   category.belongsTo(restaurant, { as: "restaurant", foreignKey: "restaurant_id"});
@@ -162,8 +158,6 @@ function initModels(sequelize) {
   restaurant_manager.hasMany(orderr, { as: "orderrs", foreignKey: "restaurant_manager_id"});
   restaurant.belongsTo(restaurant_manager, { as: "restaurant_manager", foreignKey: "restaurant_manager_id"});
   restaurant_manager.hasMany(restaurant, { as: "restaurants", foreignKey: "restaurant_manager_id"});
-  orderr.belongsTo(restaurant_review, { as: "restaurant_review", foreignKey: "restaurant_review_id"});
-  restaurant_review.hasMany(orderr, { as: "orderrs", foreignKey: "restaurant_review_id"});
   orderr.belongsTo(voucher, { as: "voucher", foreignKey: "voucher_id"});
   voucher.hasMany(orderr, { as: "orderrs", foreignKey: "voucher_id"});
 

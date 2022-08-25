@@ -18,27 +18,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    phone: {
-      type: DataTypes.STRING(13),
-      allowNull: true
-    },
     payment_info_id: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    promo_use_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     voucher_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    invoice_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    restaurant_review_id: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -56,6 +40,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     rider_id: {
       type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    Order_time: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    Delivery_time: {
+      type: DataTypes.STRING(50),
       allowNull: true
     }
   }, {

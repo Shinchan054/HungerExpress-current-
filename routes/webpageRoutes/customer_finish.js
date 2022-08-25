@@ -4,7 +4,7 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -17,6 +17,7 @@ router.get('/:id',async function(req,res){
     const item_name1=[];
     const cust_name1=[];
     const cart_id1=[];
+    const time=[];
     let ansn=await models.cart.findAll({
         where:{
             customer_id:ids,
@@ -33,6 +34,8 @@ router.get('/:id',async function(req,res){
         });
         if(orrr==null)
             continue;
+        time.push(orrr.Delivery_time);
+
         let ans3 = await models.cart.findOne({
             where: {
                 id: ansn[i].id
@@ -79,7 +82,7 @@ router.get('/:id',async function(req,res){
 
     }
 
-    res.render('Webpages/customer_finish',{id:ids,title:"Customer Order" ,item_name1:item_name1,cust_name1:cust_name1,cart_id1:cart_id1});
+    res.render('Webpages/customer_finish',{id:ids,title:"Customer Order" ,item_name1:item_name1,cust_name1:cust_name1,cart_id1:cart_id1,time:time});
 
 
 });

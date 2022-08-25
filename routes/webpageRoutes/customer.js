@@ -3,14 +3,17 @@ var router = express.Router();
 //const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
  var assign=require('./../../public/assignRider');
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 router.get('/', async function(req, res, next) {
     //var ids=req.params.id;
     var ids=req.cookies.cust_id;
+    let date=new Date().toLocaleString();
+    //console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
 
+    //console.log(new Date().toLocaleString().slice(0, 19).replace('T', ' '));
     res.cookie("cust_id",ids);
     if(typeof(ids)!='undefined') {
         let result=await models.restaurant.findAll();
