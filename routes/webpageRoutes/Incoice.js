@@ -5,7 +5,7 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -35,12 +35,33 @@ router.get('/:id', async function (req, res, next) {
         });
         item_name.push(item.name);
         item_price.push(item.price);
-        item_quantity.push(cart_item[i].quantity);
-        item_subtotal.push(item.price*cart_item[i].quantity);
-        total+=item.price*cart_item[i].quantity;
-    }
+        item_quantity.push(cart_item[i].count);
+        item_subtotal.push(item.price*cart_item[i].count);
+        total+=item.price*cart_item[i].count;
+    } 
 
-    res.render('Webpages/Invoice',{item_name:item_name,item_price:item_price,item_quantity:item_quantity,item_subtotal:item_subtotal,total:total});
+
+    let cust_id = cart.customer_id;
+    let customer = await models.customer.findOne({
+        where: {
+            id: cust_id
+        }
+    });
+
+    let cust_name = customer.name;
+    let cust_email = customer.email;
+    let cust_phone = customer.mobile;
+    
+    let rest_id = cart.restaurant_id;
+    let restaurant = await models.restaurant.findOne({
+        where: {
+            id: rest_id
+        }
+    });
+
+    let rest_name = restaurant.name;
+
+    res.render('Webpages/Invoice',{item_name:item_name,item_price:item_price,item_quantity:item_quantity,item_subtotal:item_subtotal,total:total,cust_name:cust_name,cust_email:cust_email,cust_phone:cust_phone,cart_id:cart.order_id,rest_name:rest_name});
 });
 
 module.exports = router;
