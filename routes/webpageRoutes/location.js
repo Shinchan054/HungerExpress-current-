@@ -63,6 +63,7 @@ router.get('/:id', async function (req, res, next) {
 
 
    change(order.id);
+   console.log(ans2.latitude,ans2.longitude,rider_address.latitude,rider_address.longitude);
    //console.log(ans2.latitude,ans2.longitude,rider.latitude,rider.longitude);
     res.render('Webpages/location',{lat:ans2.latitude,lng:ans2.longitude,lat1:rider_address.latitude,lng1:rider_address.longitude});
 });

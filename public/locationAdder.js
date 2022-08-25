@@ -1,5 +1,4 @@
 
-
 // config map
 let config = {
     minZoom: 7,
@@ -31,9 +30,7 @@ let config = {
   const customControl = L.Control.extend({
     // button position
     options: {
-     // position: "topleft",
       className: "leaflet-autocomplete",
-
     },
   
     // method
@@ -148,13 +145,16 @@ let config = {
     },
   
     onSubmit: ({ object }) => {
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
       const { display_name } = object.properties;
       const cord = object.geometry.coordinates;
-      // custom id for marker
-      // const customId = Math.random();
+    
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
+     axios.post('/customer/location',{lat:cord[1],lng:cord[0]}).then(res=>{
+            console.log(res);
+     });
   
       // remove last marker
       map.eachLayer(function (layer) {

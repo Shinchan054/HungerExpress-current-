@@ -14,24 +14,52 @@ router.get('/:id', async function (req, res, next) {
     res.render('Webpages/cust_location');
 });
 router.post('/', async function (req, res, next) {
+    
         lat=req.body.lat;
         long=req.body.lng;
         let id=req.cookies.cuid;
 
-        let an=await models.address.findAll();
-        let adid=an.length+1;
-        let ans=await models.address.create({
-            id:adid,
-            latitude:lat,
-            longitude:long,
-        });
-        let ans2=await models.customer.update({
-            address_id:adid,
-        },{
+        let customer=await models.customer.findOne({
             where:{
                 id:id
             }
         });
+        console.log(customer.address_id);
+        let customer_address=await models.address.findOne({
+            where:{
+                id:customer.address_id
+            }
+        });
+        if(customer_address==null)
+        {
+            let add=await models.address.findAll();
+            let addid=add.length+1;
+            await models.address.create({
+                id:addid,
+                lat:lat,
+                long:long
+            });
+            let ans2=await models.customer.update({
+                address_id:adid,
+            },{
+                where:{
+                    id:id
+                }
+            })
+        }
+        else
+        {
+            console.log("aschi vai");
+            let upd=await models.address.update({
+                latitude:lat,
+                longitude:long
+            },{
+                where:{
+                    id:customer.address_id
+                }
+            })
+        }
+        
 
     }
 );
