@@ -79,6 +79,7 @@ var riderorderRouter = require("./routes/webpageRoutes/rider_finish");
 var custFinishRouter = require("./routes/webpageRoutes/customer_finish");
 var riderMsgRouter = require("./routes/webpageRoutes/rider_msg");
 var custMsgRouter = require("./routes/webpageRoutes/cust_msg");
+var custInvoice= require("./routes/webpageRoutes/Incoice");
 app.use(upload());
 app.use(cookieParser());
 
@@ -107,6 +108,7 @@ app.use('/rider/order/finish',riderorderRouter);
 app.use('/customer/order/finish',custFinishRouter);
 app.use('/rider/msg',riderMsgRouter);
 app.use('/customer/msg',custMsgRouter);
+app.use('/customer/invoice',custInvoice);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
