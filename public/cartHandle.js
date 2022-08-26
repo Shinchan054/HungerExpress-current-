@@ -28,13 +28,7 @@ addtocart.forEach((btn) => {
          let item = JSON.parse(btn.dataset.item);
          console.log(item);
           updateCart(item,Number(rest_id.dataset.rid),Number(cust_id.dataset.cid));
-        //  let sent = {
-        //         item: item.name,
-        //         price: item.price,
-        //         description : item.description,
-        //  }
-         //console.log(sent);
-        //updateCart(btn.dataset.item);
+
 
 })
 });
