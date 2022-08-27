@@ -16,5 +16,7 @@ order.forEach((btn) => {
         console.log('cart id ==',cart_id);
         OrderConf(cart_id);
 
+        window.location.reload();
+
     })
 });

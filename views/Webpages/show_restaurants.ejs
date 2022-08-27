@@ -46,6 +46,49 @@
         from {bottom: 30px; opacity: 1;}
         to {bottom: 0; opacity: 0;}
       }
+      
+       .cart-btn{
+        padding: 0.5em 0.5em 0.5em;
+        border-radius: 3px;
+        margin: 8px 8px 8px 8px;
+        color: #fbdedb;
+        background-color: #d55050;
+        display: inline-block;
+        background: #e74c3c;
+        -webkit-transition: 0.3s;
+        -moz-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        font-family: sans-serif;
+        font-weight: 800;
+        font-size: .5em;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 50em;
+        -webkit-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+    position: relative;
+}
+.cart-btn:hover, .cart-btn:focus {
+    opacity: 0.8;
+}
+.cart-btn:active {
+    -webkit-transform: scale(0.80);
+    -moz-transform: scale(0.80);
+    -ms-transform: scale(0.80);
+    -o-transform: scale(0.80);
+    transform: scale(0.80);
+}
+.cart-btn.block {
+    display: block !important;
+}
+.cart-btn.circular {
+  border-radius: 50em !important;
+}
+
+
       </style>
 </head>
 <body style="background-color: #ffe7b4;">
@@ -97,8 +140,8 @@
                         <p class="card-text"> <%= item[i][j].price %> bdt</p> 
                         </div>     
                         </div>
-                        <div class="card-body" style="position: relative; transform:translate(20%,0%)">
-                          <button style="font-size:24px" class="cart-btn" data-item="<%=JSON.stringify(item[i][j])%>">Add to cart <i class="fa fa-shopping-cart"></i></button>
+                        <div class="card-body" style="position: relative; transform:translate(8%,0%)">
+                          <button style="font-size:24px" class="cart-btn" data-item="<%=JSON.stringify(item[i][j])%>">Add to cart</button>
                         </div>
                 </div>
                  <br><br>

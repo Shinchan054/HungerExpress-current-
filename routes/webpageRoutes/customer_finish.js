@@ -73,7 +73,10 @@ router.get('/:id',async function(req,res){
             //item_name1.push(ans3.name);
             //item_price1.push(ans2.total_price);
             //item_quantity1.push(ans2.count);
-            s=s+" "+ans3.name+" - count:"+ans2[j].count;
+            if(j==ans2.length-1)
+            s=s+" "+ans3.name+" - x"+ans2[j].count;
+            else
+            s=s+" "+ans3.name+" - x"+ans2[j].count+" , ";
 
 
         }
