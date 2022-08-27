@@ -40,7 +40,9 @@ router.post('/', async function(req, res, next) {
             let ans= await models.category.create({
                 id : l,
                 restaurant_id : rest_id,
-                name : req.body.name
+                name : req.body.name,
+                start_time: req.body.start_time,
+                end_time: req.body.end_time
             });
         }
         

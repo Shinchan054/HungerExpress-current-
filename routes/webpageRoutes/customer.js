@@ -10,11 +10,13 @@ var models = initModels(sequelize);
 router.get('/', async function(req, res, next) {
     //var ids=req.params.id;
     var ids=req.cookies.cust_id;
-    let date=new Date().toLocaleString();
+
     //console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
 
     //console.log(new Date().toLocaleString().slice(0, 19).replace('T', ' '));
+
     res.cookie("cust_id",ids);
+
     if(typeof(ids)!='undefined') {
         let result=await models.restaurant.findAll();
         //var qu = "select name,id  from restaurant";
@@ -22,8 +24,7 @@ router.get('/', async function(req, res, next) {
         const id=[];
         for(var i=0;i<result.length;i++)
         {
-            //var q = "select image_id  from restaurant_image where restaurant_id="+result[i].id;
-            //const result1 = await pool.query(q);
+
             let result1=await models.restaurant_image.findOne({
                 where: {
                     restaurant_id: result[i].id

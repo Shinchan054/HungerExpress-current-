@@ -110,9 +110,7 @@ where:{
 
         cust_name1.push(ans1.name);
 
-        //const item_name1 = [];
-        // const item_price1 = [];
-        // const item_quantity1 = [];
+
 
         let ans2 = await models.cart_item.findAll({
             where: {
@@ -168,7 +166,7 @@ router.post('/', async function(req, res, next) {
     );
   //  console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
     let an3=await models.orderr.create({
-        id:l+1000,
+        id:l+1200,
         restaurant_id:r,
         restaurant_manager_id:an2.id,
         cart_id: a,
@@ -179,14 +177,14 @@ router.post('/', async function(req, res, next) {
 
     //console.log(an3);
     let an1= await models.cart.update({
-            order_id:l+1000
+            order_id:l+1200
         },{
             where:{
                 id:a
             }
         }
     );
-    let rep1=await assign(l+1000);
+    let rep1=await assign(l+1200);
 
     //console.log("done");
 

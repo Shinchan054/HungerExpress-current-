@@ -10,11 +10,11 @@ const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/Hunge
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 
-global.rest_id=0;
 
 
 
-var ImageFolder = 'C:\\Users\\mohai\\IdeaProjects\\HungerExpress-current\\public\\images\\';
+
+var ImageFolder = 'C:\\Users\\mohai\\IdeaProjects\\HungerExpress-current-\\public\\images\\';
 
 
 
@@ -43,7 +43,7 @@ router.post('/', async function(req, res, next) {
     let inp = req.body;
     let img = req.files;
     let rest_id=req.cookies.id;
-    console.log("hello",req.cookies.id);
+    //console.log("hello",req.cookies.id);
 
     const data=await models.item_image.findAll();
     let l=data.length+1;

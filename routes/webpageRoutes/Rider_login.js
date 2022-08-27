@@ -19,10 +19,10 @@ router.get('/',function(req,res){
 
 router.post('/', async function(req,res,next)  {
 
-
+    //console.log('Hello');
     let email;
     let pass;
-    email=req.body.username;
+    email=req.body.email;
     pass=req.body.password;
     console.log(email,pass);
     let riders=await models.rider.findAll();

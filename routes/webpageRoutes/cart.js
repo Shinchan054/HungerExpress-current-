@@ -22,30 +22,32 @@ router.get('/', async function (req, res, next) {
     if(!req.session.cart){
         res.render('Webpages/noOrder');
     }
-    let totalprice=req.session.cart.totalPrice;
-    let totalqty=req.session.cart.totalQty;
-    for(var i=0;i<req.session.cart.key.length;i++){
-    name.push(req.session.cart.key[i]);
-    price.push(req.session.cart.items[req.session.cart.key[i]].price/req.session.cart.items[req.session.cart.key[i]].qty);
-    qty.push(req.session.cart.items[req.session.cart.key[i]].qty);
-    subTotal.push(req.session.cart.items[req.session.cart.key[i]].price);
+    else {
+        let totalprice = req.session.cart.totalPrice;
+        let totalqty = req.session.cart.totalQty;
+        for (var i = 0; i < req.session.cart.key.length; i++) {
+            name.push(req.session.cart.key[i]);
+            price.push(req.session.cart.items[req.session.cart.key[i]].price / req.session.cart.items[req.session.cart.key[i]].qty);
+            qty.push(req.session.cart.items[req.session.cart.key[i]].qty);
+            subTotal.push(req.session.cart.items[req.session.cart.key[i]].price);
 
+        }
+        let delfee = await CalculateDelFee(cust_id, rest_id);
+        req.session.cart.delfee = delfee;
+        //console.log(name,price,qty,subTotal);
+        totalprice = totalprice + delfee;
+        req.session.cart.totalPrice = totalprice;
+        res.render('Webpages/cart-page', {
+            title: 'Cart',
+            name: name,
+            price: price,
+            qty: qty,
+            subTotal: subTotal,
+            totalprice: totalprice,
+            delfee: delfee,
+            totalqty: totalqty
+        });
     }
-    let delfee=await CalculateDelFee(cust_id,rest_id);
-    req.session.cart.delfee=delfee;
-    //console.log(name,price,qty,subTotal);
-    totalprice=totalprice+delfee;
-    req.session.cart.totalPrice=totalprice;
-    res.render('Webpages/cart-page',{
-        title:'Cart',
-        name:name,
-        price:price,
-        qty:qty,
-        subTotal:subTotal,
-        totalprice:totalprice,
-        delfee:delfee,
-        totalqty:totalqty
-    });
 });
 
 
@@ -131,14 +133,13 @@ router.post('/', async function (req, res, next) {
                 id:ls+i+1000,
                 cart_id:l+1,
                 item_id:req.session.cart.items[req.session.cart.key[i]].id,
-                //item_name:req.session.cart.items[req.session.cart.key[i]].name,
                 count:req.session.cart.items[req.session.cart.key[i]].qty,
                 total_price:req.session.cart.items[req.session.cart.key[i]].price,
             });
         }
         str = '/customer/order_page/'+(l+1);
         res.json({str:str});
-        //res.redirect('/customer/order_page/'+(l+1));
+
     }
     else{
         stripe.charges.create({
@@ -146,19 +147,32 @@ router.post('/', async function (req, res, next) {
             source : req.body.token,
             currency: 'bdt',
             description: 'test charge'
-        }).then(async function(res){
+        }).then(async function(resp){
 
-            console.log(res.receipt_url);
+            //console.log(resp.receipt_url);
+            //console.log('stripe charge success');
+            let count=await models.payment_info.findAll();
+
+            let pay=await models.payment_info.create({
+                id:count.length+1,
+                type:'card',
+                url:resp.receipt_url,
+                transaction_id:resp.balance_transaction,
+                account_no:resp.id,
+                time:new Date().toLocaleString().slice(0, 19).replace('T', ' ')
+
+            });
 
             let ans= await models.cart.create({
                 id:l+1,
                 customer_id:req.session.cart.customer_id,
                 restaurant_id:req.session.cart.restaurant_id,
                 total_price:req.session.cart.totalPrice,
-                //order_time:new Date(),
-                //delivery_time:new Date(),
+                Delivery_fee:req.session.cart.delfee,
+                Payment_info_id:count.length+1,
+
             });
-            //console.log(req.session.cart.items[req.session.cart.key[0]]);
+
 
             let an= await models.cart_item.findAll();
             let ls=an.length+1;
@@ -174,12 +188,13 @@ router.post('/', async function (req, res, next) {
 
             }
             str = '/customer/order_page/'+(l+1);
+            //console.log("klgjdhgjlhlfghfjhjhkklfglhfhghjfg",str);
             res.json({str:str});
+           // res.redirect(str);
 
-        }).catch(err =>{
-            str = '/customer/cart';
+        }).catch(function(err){
+            str='/customer/cart';
             res.json({str:str});
-            //res.redirect('/customer/cart');
         });
     }
 

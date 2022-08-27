@@ -38,7 +38,15 @@
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" placeholder="" name="name" required>
                           </div>
-          
+                                       <div class="form-group">
+                                      <label for="quantity">Start Time (between 8 and 22):</label>
+                                      <input type="number" class="form-control" id="quantity" name="start_time" min="8" max="22" required>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="quantity">End Time (between 8 and 22):</label>
+                                    <input type="number" class="form-control" id="quantity" name="end_time" min="8" max="22" required>
+                                     </div>
+
                           <br><br>
                           <button>Add</button>
 

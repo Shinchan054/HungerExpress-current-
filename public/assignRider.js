@@ -10,8 +10,7 @@ function toRadians(degrees) {
 }
 async function Dist(restid,rid)
 {
-    //console.log(restid,rid);
-    //console.log()
+
     var res=await models.restaurant.findOne({
         where:{
             id:restid
@@ -77,19 +76,19 @@ async function assign(id)
             }
         });
     var map=new Map();
-    for(var i=0;i<result.length;i++)
-    {
-        let ans=await Dist(rest.id,result[i].id);
+    for(var i=0;i<result.length;i++) {
+        let ans = await Dist(rest.id, result[i].id);
         dist.push(ans);
-        if(ans<5)
-        {
-            map.set(ans,result[i].id);
+        console.log(ans);
+        if (ans < 5) {
+            map.set(ans, result[i].id);
 
 
+        }
     }
-
     const map1=new Map([...map].sort());
         let count=0;
+        console.log(map1);
     for (var key of map1.keys()) {
         let rid=await models.TempRider.create(
             {
@@ -107,7 +106,7 @@ async function assign(id)
         }
 
     }
-    }
+
 
 }
 module.exports = assign;

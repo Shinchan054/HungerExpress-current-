@@ -18,6 +18,14 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING(50),
       allowNull: false
+    },
+    start_time: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    end_time: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

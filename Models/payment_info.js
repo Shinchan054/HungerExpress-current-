@@ -15,12 +15,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: false
     },
-    payment_time: {
-      type: DataTypes.TIME,
-      allowNull: true
-    },
     transaction_id: {
       type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    url: {
+      type: DataTypes.STRING(500),
+      allowNull: true
+    },
+    time: {
+      type: DataTypes.STRING,
       allowNull: true
     }
   }, {

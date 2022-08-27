@@ -44,36 +44,41 @@ router.get('/:id',async function(req,res){
                 category_id:result[i].id
             }
         });
-        category.push(result[i].name);
+        let time=new Date().getHours()+6;
+        console.log(time,result[i].start_time,result[i].end_time);
+        if(time>=result[i].start_time && time<=result[i].end_time) {
+            category.push(result[i].name);
 
-        let a=[];
-        let im=[];
-        for(var j=0;j < result1.length;j++) {
-
-
-            const result2=await models.item.findOne({
-                where:{
-                    id:result1[j].item_id
-                }
-            });
+            let a = [];
+            let im = [];
+            for (var j = 0; j < result1.length; j++) {
 
 
-            if (result2.avail == 1) {
-                rest_closed = 0;
-                const result3=await models.item_image.findOne({
-                    where:{
-                        item_id:result1[j].item_id
+                const result2 = await models.item.findOne({
+                    where: {
+                        id: result1[j].item_id
                     }
                 });
 
-                a.push(result2);
-                im.push(result3.image_id);
+
+                if (result2.avail == 1) {
+                    rest_closed = 0;
+                    const result3 = await models.item_image.findOne({
+                        where: {
+                            item_id: result1[j].item_id
+                        }
+                    });
+
+                    a.push(result2);
+                    im.push(result3.image_id);
 
 
+                }
             }
+
+            item.push(a);
+            img.push(im);
         }
-        item.push(a);
-        img.push(im);
     }
 
     let massage="open";
