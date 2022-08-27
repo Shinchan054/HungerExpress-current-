@@ -5,17 +5,20 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 const stripe = require('stripe')(process.env.key)
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
+var CalculateDelFee=require('./../../public/CalculateDeliveryfee');
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     //console.log(req.session.cart.key);
     const name=[];
     const price=[];
     const qty =[];
     const subTotal=[];
+    let cust_id=req.cookies.cust_id;
+    let rest_id=req.cookies.cust_rest_id;
     if(!req.session.cart){
         res.render('Webpages/noOrder');
     }
@@ -28,7 +31,11 @@ router.get('/', function (req, res, next) {
     subTotal.push(req.session.cart.items[req.session.cart.key[i]].price);
 
     }
-    console.log(name,price,qty,subTotal);
+    let delfee=await CalculateDelFee(cust_id,rest_id);
+    req.session.cart.delfee=delfee;
+    //console.log(name,price,qty,subTotal);
+    totalprice=totalprice+delfee;
+    req.session.cart.totalPrice=totalprice;
     res.render('Webpages/cart-page',{
         title:'Cart',
         name:name,
@@ -36,6 +43,7 @@ router.get('/', function (req, res, next) {
         qty:qty,
         subTotal:subTotal,
         totalprice:totalprice,
+        delfee:delfee,
         totalqty:totalqty
     });
 });
@@ -44,7 +52,7 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/update', async function (req, res, next) {
-    console.log('received');
+    //console.log('received');
 
      if(!req.session.cart)
      {
@@ -54,8 +62,12 @@ router.post('/update', async function (req, res, next) {
             totalPrice:0,
             key:[],
             customer_id:req.body.cid,
-            restaurant_id:req.body.rid
+            restaurant_id:req.body.rid,
+            delfee:0
+
+
         }
+
      }
 
      let cart = req.session.cart;
@@ -96,15 +108,22 @@ router.post('/', async function (req, res, next) {
     //console.log(req.session.cart.restaurant_id,req.session.cart.customer_id);
 
     if(pt=='cod'){
+        let count=await models.payment_info.findAll();
+
+        let pay=await models.payment_info.create({
+            id:count.length+1,
+            type:'cod',
+        });
         let ans=await models.cart.create({
             id:l+1,
             customer_id:req.session.cart.customer_id,
             restaurant_id:req.session.cart.restaurant_id,
             total_price:req.session.cart.totalPrice,
-            //order_time:new Date(),
-            //delivery_time:new Date(),
+            Delivery_fee:req.session.cart.delfee,
+            Payment_info_id:count.length+1,
         });
-        console.log(req.session.cart.items[req.session.cart.key[0]]);
+
+        //console.log(req.session.cart.items[req.session.cart.key[0]]);
         let an=await models.cart_item.findAll();
         let ls=an.length+1;
         for(var i=0;i<req.session.cart.key.length;i++){
@@ -127,9 +146,9 @@ router.post('/', async function (req, res, next) {
             source : req.body.token,
             currency: 'bdt',
             description: 'test charge'
-        }).then(async function(response){
+        }).then(async function(res){
 
-           // console.log(res.receipt_url);
+            console.log(res.receipt_url);
 
             let ans= await models.cart.create({
                 id:l+1,
@@ -155,13 +174,13 @@ router.post('/', async function (req, res, next) {
 
             }
             str = '/customer/order_page/'+(l+1);
-            response.json({str:str});
-        })
-        // }).catch(err =>{
-        //     str = '/customer/cart';
-        //     res.json({str:str});
-        //     //res.redirect('/customer/cart');
-        // });
+            res.json({str:str});
+
+        }).catch(err =>{
+            str = '/customer/cart';
+            res.json({str:str});
+            //res.redirect('/customer/cart');
+        });
     }
 
 
@@ -234,7 +253,7 @@ router.post('/minus', async function (req, res, next) {
         else{
         res.json({ cart : req.session.cart});
         }
-});
+} );
 
 
 // router.post('/plus', async function (req, res, next) {

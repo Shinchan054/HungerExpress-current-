@@ -73,7 +73,12 @@
      
   </header>
 
-
+    <div class="card-body">
+                              <button style="font-size:24px" class="Allavail-btn" data-id="<%=JSON.stringify(id)%>">Make  All available<i class="fa fa-shopping-cart"></i></button>
+                   </div>
+    <div class="card-body">
+                              <button style="font-size:24px" class="Allunavail-btn" data-id="<%=JSON.stringify(id)%>">Make  All Unavailable<i class="fa fa-shopping-cart"></i></button>
+                            </div>
     <section class="products" id="products">
 
 
@@ -105,6 +110,9 @@
     <!-- <script src="/node_modules/axios/dist/axios.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/availability.js" type="module"></script>
+    <script src="/Allavail.js" type="module"></script>
+    <script src="/Allunavail.js" type="module"></script>
+
 
     </body>
 </html>

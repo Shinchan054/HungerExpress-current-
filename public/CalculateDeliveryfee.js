@@ -25,21 +25,12 @@ async function Dist(lat1,long1,lat2,long2)
 
 
 
-async function CalculateDelFee(id)
+async function CalculateDelFee(cid,rid)
 {
-    let order=await models.orderr.findOne({
-        where: {
-            cart_id: id
-        }
-    });
-    let cart=await models.cart.findOne({
-        where: {
-            id: id
-        }
-    });
+
     let cust=await models.customer.findOne({
         where: {
-            id: cart.customer_id
+            id: cid
         }
     });
     let customer_address=await models.address.findOne({
@@ -50,7 +41,7 @@ async function CalculateDelFee(id)
 
         let rest=await models.restaurant.findOne({
             where: {
-                restaurant_manager_id: order.restaurant_manager_id
+                id: rid
             }
         });
         let rest_address=await models.rest_address.findOne({
@@ -59,15 +50,12 @@ async function CalculateDelFee(id)
             }
         });
         let dst=await Dist(customer_address.latitude,customer_address.longitude,rest_address.latitude,rest_address.longitude);
-        let ans=await models.cart.update(
-            {
-                Delivery_fee: Math.ceil(dst*20)
-            },{
-        where: {
-            id: id
-        }
-    });
-        return 0;
+        let delfee=dst*10;
+        if(delfee<=15)
+            return 15;
+        else
+            return delfee;
+
 
 }
 module.exports = CalculateDelFee;

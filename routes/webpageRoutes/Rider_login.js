@@ -11,30 +11,35 @@ var models = initModels(sequelize);
 
 router.get('/',function(req,res){
 
-    res.render('Webpages/rest_login');
+
+    res.render('Webpages/Rider_login');
 
 
 });
 
 router.post('/', async function(req,res,next)  {
+
+
     let email;
     let pass;
-    email=req.body.email;
+    email=req.body.username;
     pass=req.body.password;
-    let result=await models.restaurant_manager.findOne({
+    console.log(email,pass);
+    let riders=await models.rider.findAll();
+
+    let result=await models.rider.findOne({
         where: {
+
             email: email,
             password: pass
         }
     });
+
     if(result!=null)
     {
-
-        res.redirect("/restaurant/home/"+result.restaurant_id);
-
+        res.redirect("/rider/home/"+result.id);
 
     }
-    res.render('Webpages/rest_login');
-
+    res.render('Webpages/Rider_login');
 });
 module.exports = router;

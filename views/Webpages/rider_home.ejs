@@ -82,6 +82,7 @@
             <th>Status</th>
             <th>Map</th>
             <th>Massage</th>
+            <th>Contact Info</th>
             </tr>
             <% for(var i=0;i< cust_name1.length;i++){ %>
 
@@ -94,6 +95,7 @@
               </td>
               <td><a class="nav-link active" aria-current="page" href="/order_loc/<%=cart_id1[i]%>">Track order</a></td>
               <td><a class="nav-link active" aria-current="page" href="/rider/msg/<%=cart_id1[i]%>">Massage</a></td>
+              <td><%=mobile[i]%></td>
             </tr>
             <% }%>
           </table>

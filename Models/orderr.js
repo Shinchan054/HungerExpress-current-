@@ -14,35 +14,11 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    delivery_address_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'delivery_address',
-        key: 'id'
-      }
-    },
     restaurant_manager_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'restaurant_manager',
-        key: 'id'
-      }
-    },
-    payment_info_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'payment_info',
-        key: 'id'
-      }
-    },
-    voucher_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'voucher',
         key: 'id'
       }
     },

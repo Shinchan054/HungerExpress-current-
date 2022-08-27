@@ -4,7 +4,7 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 var assign=require('./../../public/assignRider');
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
@@ -31,7 +31,7 @@ router.get('/:id',async function(req,res){
         let order = await models.orderr.findOne({
             where: {
                 id: or[i].order_id,
-                status: 'Finished'
+                status: 'Confirmed'
             }
         });
         if(order==null)
@@ -83,6 +83,7 @@ router.get('/:id',async function(req,res){
     const item_name1=[];
     const cust_name1=[];
     const cart_id1=[];
+    const mobile=[];
     let order1=await models.orderr.findAll({
         where:{
             rider_id:ids,
@@ -108,7 +109,7 @@ router.get('/:id',async function(req,res){
         });
 
         cust_name1.push(ans1.name);
-
+        mobile.push(ans1.mobile);
 
         let ans2 = await models.cart_item.findAll({
             where: {
@@ -135,7 +136,7 @@ router.get('/:id',async function(req,res){
     }
 
 
-    res.render('Webpages/rider_home',{id:ids,title:rider.name ,item_name:item_name,cust_name:cust_name,cart_id:cart_id,item_name1:item_name1,cust_name1:cust_name1,cart_id1:cart_id1});
+    res.render('Webpages/rider_home',{id:ids,title:rider.name ,item_name:item_name,cust_name:cust_name,cart_id:cart_id,item_name1:item_name1,cust_name1:cust_name1,cart_id1:cart_id1,mobile:mobile});
 
 
 });
@@ -209,6 +210,11 @@ router.post('/delivered',async function(req,res) {
                 cart_id:cart_id,
 
             }});
+        let cart = await models.cart.findOne({
+            where: {
+                id: cart_id
+            }
+        });
         //console.log(new Date().toLocaleString().slice(0, 19).replace('T', ' '));
         let check=await models.orderr.update({
                 status:"Delivered",
@@ -222,6 +228,13 @@ router.post('/delivered',async function(req,res) {
 
                 }
             });
+
+        let ans =await models.Massage.destroy({
+            where:{
+                rider_id:order.rider_id,
+                customer_id:cart.customer_id
+            }
+        });
 
     }
 );

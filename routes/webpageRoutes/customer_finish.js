@@ -4,15 +4,14 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 
 router.get('/:id',async function(req,res){
     let ids=req.params.id;
-    //var q="select name from restaurant where id = "+ids;
-    //const rest_name=await pool.query(q);
+
 
     const item_name1=[];
     const cust_name1=[];
@@ -43,7 +42,7 @@ router.get('/:id',async function(req,res){
         });
 
         cart_id1.push(ansn[i].cart_id);
-        console.log(ans3);
+        //console.log(ans3);
         let ans1 = await models.customer.findOne({
             where: {
                 id: ans3.customer_id
@@ -52,9 +51,7 @@ router.get('/:id',async function(req,res){
 
         cust_name1.push(ans1.name);
 
-        //const item_name1 = [];
-        // const item_price1 = [];
-        // const item_quantity1 = [];
+
 
         let ans2 = await models.cart_item.findAll({
             where: {
@@ -70,13 +67,8 @@ router.get('/:id',async function(req,res){
                 }
 
             });
-            //item_name1.push(ans3.name);
-            //item_price1.push(ans2.total_price);
-            //item_quantity1.push(ans2.count);
-            if(j==ans2.length-1)
-            s=s+" "+ans3.name+" - x"+ans2[j].count;
-            else
-            s=s+" "+ans3.name+" - x"+ans2[j].count+" , ";
+
+            s=s+" "+ans3.name+" - count:"+ans2[j].count;
 
 
         }

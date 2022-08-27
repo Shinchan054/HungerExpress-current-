@@ -5,15 +5,19 @@ var router = express.Router();
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 var initModels = require('./../../Models/init-models');
 const { Session } = require('express-session');
 var CalculateEta=require('./../../public/ETA');
 var change=require('./../../public/changePosition');
 var models = initModels(sequelize);
+//let t=20;
+let t1=new Date().getTime();
 router.get('/:id', async function (req, res, next) {
 let id=req.params.id;
-
+let t2=new Date().getTime();
+let t=(t2-t1)/(1000*60);
+t=20-Math.round(t);
 let ans=await models.cart.findOne({
     where: {
         id: id
@@ -39,6 +43,7 @@ else
 
          let eta=await CalculateEta(ans1.cart_id);
          eta=Math.round(eta);
+         eta=eta+t;
         let rider=await models.rider.findOne({
            where: {
                id:ans1.rider_id
@@ -78,6 +83,8 @@ else
         res.render('Webpages/OrderPage', {title: "Your Food has been delivered.", url: url,id:id,eta:0,mob:0,status:ans1.status});
     }
 }
+
+//t=t-1;
 });
 
 

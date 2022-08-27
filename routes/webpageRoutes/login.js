@@ -4,14 +4,14 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 
 router.get('/',function(req,res){
 
-    console.log('hello login');
+    //console.log('hello login');
     res.render('Webpages/login');
 
 
@@ -31,7 +31,7 @@ router.post('/', async function(req,res,next)  {
             password: pass
         }
     });
-    console.log(result);
+    //console.log(result);
 
 
         if(result!=null)

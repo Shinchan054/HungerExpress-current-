@@ -61,7 +61,7 @@ async function CalculateEta(id)
          }
    });
    let dst=await Dist(customer_address.latitude,customer_address.longitude,rest_address.latitude,rest_address.longitude);
-   return 20+dst*10;
+   return dst*10;
    }
    else if(order.status=='Finished') {
        let rest=await models.restaurant.findOne({

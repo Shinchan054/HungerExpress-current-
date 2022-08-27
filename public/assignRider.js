@@ -76,24 +76,38 @@ async function assign(id)
                 restaurant_manager_id:or.restaurant_manager_id
             }
         });
+    var map=new Map();
     for(var i=0;i<result.length;i++)
     {
         let ans=await Dist(rest.id,result[i].id);
         dist.push(ans);
         if(ans<5)
         {
+            map.set(ans,result[i].id);
+
+
+    }
+
+    const map1=new Map([...map].sort());
+        let count=0;
+    for (var key of map1.keys()) {
         let rid=await models.TempRider.create(
             {
                 id:r,
-                rider_id:result[i].id,
+                rider_id:map1.get(key),
                 order_id:id
 
             }
         );
+        count++;
         r++;
-
+        if(count==10)
+        {
+            break;
         }
 
     }
+    }
+
 }
 module.exports = assign;

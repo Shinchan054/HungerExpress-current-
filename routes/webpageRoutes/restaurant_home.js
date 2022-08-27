@@ -4,9 +4,9 @@ const url = require('url');
 const Pool = require('pg').Pool;
 let pool = require('./../../db_config');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:12345@localhost:5432/HungerExpress');
+const sequelize = new Sequelize('postgres://postgres:tanmoy@localhost:5432/HungerExpress');
 var assign=require('./../../public/assignRider');
-var CalculateDelFee=require('./../../public/CalculateDeliveryfee');
+
 var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 
@@ -101,7 +101,7 @@ where:{
         });
         time.push(ansn[i].Order_time);
         cart_id1.push(ansn[i].cart_id);
-        console.log(ans3);
+       // console.log(ans3);
         let ans1 = await models.customer.findOne({
             where: {
                 id: ans3.customer_id
@@ -166,7 +166,7 @@ router.post('/', async function(req, res, next) {
         }
     }
     );
-    console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
+  //  console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
     let an3=await models.orderr.create({
         id:l+1000,
         restaurant_id:r,
@@ -187,8 +187,8 @@ router.post('/', async function(req, res, next) {
         }
     );
     let rep1=await assign(l+1000);
-    let rep= await CalculateDelFee(a);
-    console.log("done");
+
+    //console.log("done");
 
 });
 router.post('/finish', async function(req, res, next) {

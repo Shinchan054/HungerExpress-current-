@@ -74,12 +74,13 @@ var rlocRouter = require("./routes/webpageRoutes/rest_location");
 var orrRouter = require("./routes/webpageRoutes/location");
 var orfinRouter = require("./routes/webpageRoutes/rest_finish_order");
 var riderRouter = require("./routes/webpageRoutes/rider_home");
-var riderloginRouter = require("./routes/webpageRoutes/rider_log");
+var riderloginRouter = require("./routes/webpageRoutes/Rider_login");
 var riderorderRouter = require("./routes/webpageRoutes/rider_finish");
 var custFinishRouter = require("./routes/webpageRoutes/customer_finish");
 var riderMsgRouter = require("./routes/webpageRoutes/rider_msg");
 var custMsgRouter = require("./routes/webpageRoutes/cust_msg");
 var custInvoice= require("./routes/webpageRoutes/Incoice");
+
 app.use(upload());
 app.use(cookieParser());
 

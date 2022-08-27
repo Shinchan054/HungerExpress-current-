@@ -23,14 +23,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    order_time: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    delivery_time: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
     total_price: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -40,6 +32,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     Delivery_fee: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    Payment_info_id: {
       type: DataTypes.INTEGER,
       allowNull: true
     }

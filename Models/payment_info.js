@@ -7,17 +7,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    order_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'orderr',
-        key: 'id'
-      }
-    },
     account_no: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: true
     },
     type: {
       type: DataTypes.STRING(50),
@@ -25,11 +17,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     payment_time: {
       type: DataTypes.TIME,
-      allowNull: false
+      allowNull: true
     },
     transaction_id: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,
