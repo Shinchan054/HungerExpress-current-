@@ -8,11 +8,15 @@ function updateAvail(item){
 };
 
 addtocart.forEach((btn) => {
+    
     btn.addEventListener('click', (e) => {
+
         let item = JSON.parse(btn.dataset.item);
         updateAvail(item);
-
-
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1500);
+     
 
     })
 });
