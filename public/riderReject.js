@@ -14,6 +14,7 @@ orderrr.forEach((btn) => {
         console.log("clicked rejected");
         let cart_id = JSON.parse(btn.dataset.car_id);
         OrderRej(Number(cart_id),Number(rider1_id.dataset.rid));
-
+        
+        window.location.reload();
     })
 });

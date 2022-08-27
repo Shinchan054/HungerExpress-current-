@@ -86,7 +86,8 @@ router.get('/:id',async function(req,res){
         ,item : item,
         img:img,
         cat:category,
-        url : img_url
+        url : img_url,
+        id:id
     });
 });
 router.post('/', async function (req, res, next) {

@@ -14,6 +14,7 @@ order.forEach((btn) => {
         console.log("clicked");
         let cart_id = JSON.parse(btn.dataset.cart_id);
         OrderConf(Number(cart_id),Number(rider_id.dataset.rid));
-
+        
+        window.location.reload();
     })
 });

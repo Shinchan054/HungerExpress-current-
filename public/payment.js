@@ -56,8 +56,11 @@ form.addEventListener('submit', (e) => {
     stripe.createToken(card).then(result => {
         console.log(result.token.id);
         axios.post('/customer/cart',{ordertype:'card', token: result.token.id}).then(res=>{
-            window.location.href=res.data.str;
-            //res.redirect(res.data.str);
+            //window.location.href=res.data.str;
+            console.log(res);
+        }).catch(err=>{
+            console.log('error khaisi');
+            console.log(err);
         })
 
     }).catch(error => {

@@ -55,10 +55,7 @@ router.post('/update', async function (req, res, next) {
             key:[],
             customer_id:req.body.cid,
             restaurant_id:req.body.rid
-
-
         }
-
      }
 
      let cart = req.session.cart;
@@ -130,9 +127,9 @@ router.post('/', async function (req, res, next) {
             source : req.body.token,
             currency: 'bdt',
             description: 'test charge'
-        }).then(async function(res){
+        }).then(async function(response){
 
-            console.log(res.receipt_url);
+           // console.log(res.receipt_url);
 
             let ans= await models.cart.create({
                 id:l+1,
@@ -158,13 +155,13 @@ router.post('/', async function (req, res, next) {
 
             }
             str = '/customer/order_page/'+(l+1);
-            res.json({str:str});
-
-        }).catch(err =>{
-            str = '/customer/cart';
-            res.json({str:str});
-            //res.redirect('/customer/cart');
-        });
+            response.json({str:str});
+        })
+        // }).catch(err =>{
+        //     str = '/customer/cart';
+        //     res.json({str:str});
+        //     //res.redirect('/customer/cart');
+        // });
     }
 
 
@@ -237,7 +234,7 @@ router.post('/minus', async function (req, res, next) {
         else{
         res.json({ cart : req.session.cart});
         }
-} );
+});
 
 
 // router.post('/plus', async function (req, res, next) {

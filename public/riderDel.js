@@ -15,6 +15,7 @@ orderr.forEach((btn) => {
         let cart_id = JSON.parse(btn.dataset.cart_id);
         console.log('cart id ==',cart_id);
         Orderdel(cart_id);
-
+        
+        window.location.reload();
     })
 });
