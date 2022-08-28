@@ -1,3 +1,3 @@
 var interval = setInterval(function() {
-    //location.reload();
-} , 1000);
+    location.reload();
+} , 4000);

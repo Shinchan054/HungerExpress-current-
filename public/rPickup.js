@@ -16,5 +16,6 @@ orderrrr.forEach((btn) => {
         console.log('cart id ==',cart_id);
         OrderPick(cart_id);
 
+        window.location.reload();
     })
 });

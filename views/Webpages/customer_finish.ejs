@@ -13,14 +13,18 @@
             <th>Customer</th>
             <th>Status</th>
             <th>Date</th>
+            <th> Invoice </th>
             </tr>
             <% for(var i=0;i< cust_name1.length;i++){ %>
 
             <tr>
+            <td><%=cart_id1[i]%></td>
              <td><%= item_name1[i]%></td>
               <td><%=cust_name1[i]%></td>
               <td>finished   </td>
               <td><%=time[i]%></td>
+
+              <td> <a href="/customer/invoice/<%=cart_id1[i]%>">Invoice</a></td>
             </tr>
             <% }%>
           </table>

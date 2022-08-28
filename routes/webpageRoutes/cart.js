@@ -113,7 +113,7 @@ router.post('/', async function (req, res, next) {
         let count=await models.payment_info.findAll();
 
         let pay=await models.payment_info.create({
-            id:count.length+1,
+            id:count.length+101,
             type:'cod',
         });
         let ans=await models.cart.create({
@@ -154,7 +154,7 @@ router.post('/', async function (req, res, next) {
             let count=await models.payment_info.findAll();
 
             let pay=await models.payment_info.create({
-                id:count.length+1,
+                id:count.length+101,
                 type:'card',
                 url:resp.receipt_url,
                 transaction_id:resp.balance_transaction,
@@ -169,7 +169,7 @@ router.post('/', async function (req, res, next) {
                 restaurant_id:req.session.cart.restaurant_id,
                 total_price:req.session.cart.totalPrice,
                 Delivery_fee:req.session.cart.delfee,
-                Payment_info_id:count.length+1,
+                Payment_info_id:count.length+101,
 
             });
 

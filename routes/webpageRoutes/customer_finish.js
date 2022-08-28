@@ -41,8 +41,8 @@ router.get('/:id',async function(req,res){
             }
         });
 
-        cart_id1.push(ansn[i].cart_id);
-        //console.log(ans3);
+        cart_id1.push(ansn[i].id);
+        //console.log(ansn[i].id);
         let ans1 = await models.customer.findOne({
             where: {
                 id: ans3.customer_id

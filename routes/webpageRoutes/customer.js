@@ -11,9 +11,7 @@ router.get('/', async function(req, res, next) {
     //var ids=req.params.id;
     var ids=req.cookies.cust_id;
 
-    //console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
 
-    //console.log(new Date().toLocaleString().slice(0, 19).replace('T', ' '));
 
     res.cookie("cust_id",ids);
 

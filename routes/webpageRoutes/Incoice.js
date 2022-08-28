@@ -11,12 +11,24 @@ var initModels = require('./../../Models/init-models');
 var models = initModels(sequelize);
 router.get('/:id', async function (req, res, next) {
     let id=req.params.id;
+    //console.log(id);
     let cart=await models.cart.findOne({
         where:{
             id:id
 
         }
     });
+    //console.log(cart.Payment_info_id);
+    let payment=await models.payment_info.findOne({
+        where:{
+            id:cart.Payment_info_id
+        }
+    });
+    let url;
+    if(payment==null)
+        url=0;
+    else
+        url=payment.url;
     let cart_item=await models.cart_item.findAll({
         where:{
             cart_id:id
@@ -60,8 +72,8 @@ router.get('/:id', async function (req, res, next) {
     });
 
     let rest_name = restaurant.name;
-
-    res.render('Webpages/Invoice',{item_name:item_name,item_price:item_price,item_quantity:item_quantity,item_subtotal:item_subtotal,total:total,cust_name:cust_name,cust_email:cust_email,cust_phone:cust_phone,cart_id:cart.order_id,rest_name:rest_name});
+     console.log(url);
+    res.render('Webpages/Invoice',{item_name:item_name,item_price:item_price,item_quantity:item_quantity,item_subtotal:item_subtotal,total:total,cust_name:cust_name,cust_email:cust_email,cust_phone:cust_phone,cart_id:cart.order_id,rest_name:rest_name,url:url,delfee:cart.Delivery_fee});
 });
 
 module.exports = router;

@@ -85,10 +85,10 @@
                 <div class="col-xl-3">
                   <ul class="list-unstyled">
                     <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span><%=total%></li>
-                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Delivery Charge</span>20</li>
+                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Delivery Charge</span><%=delfee%></li>
                   </ul>
                   <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
-                      style="font-size: 25px;"><%=(total+20)%></span></p>
+                      style="font-size: 25px;"><%=(total+delfee)%></span></p>
                 </div>
               </div>
               <hr>
@@ -96,22 +96,26 @@
                 <div class="col-xl-10">
                   <p>Thank you for your purchase</p>
                 </div>
+                <% if(url!=0){ %>
                 <div class="col-xl-2">
-                  <button type="button" class="btn btn-primary text-capitalize" onclick="func()"
-                    style="background-color:#60bdf3 ;">See receipt</button>
+                  <a href="<%=url%>" class="btn primary-btn" role="button">See Receipt</a>
+
                 </div>
+                <% } %>
               </div>
       
             </div>
           </div>
         </div>
       </div>
-
-
+       <div id="mydiv" data-url="<%url%>"></div>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
      <script>
         function func(){
-            window.location.href = 'https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xTFZaRlhGS1RhWVRMYUhWKOTdn5gGMga6oKYtJtI6LBY4HGP4-JCY_JUGtoBAKaYgN4ISbaUo5aVE-ayEDGRmSMX_SjpzyJv56oqp';
+            var url = document.getElementById("mydiv");
+            var str = url.dataset.url;
+            console.log(str);
+            window.location.href = str;
         }
      </script>
 </body>
