@@ -54,7 +54,7 @@ router.get('/', async function (req, res, next) {
 
 
 router.post('/update', async function (req, res, next) {
-    //console.log('received');
+    console.log('received');
 
      if(!req.session.cart)
      {

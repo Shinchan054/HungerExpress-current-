@@ -12,7 +12,6 @@ router.get('/', async function(req, res, next) {
     var ids=req.cookies.cust_id;
 
 
-
     res.cookie("cust_id",ids);
 
     if(typeof(ids)!='undefined') {

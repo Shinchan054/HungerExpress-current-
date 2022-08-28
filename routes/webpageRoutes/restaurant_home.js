@@ -198,23 +198,63 @@ router.post('/finish', async function(req, res, next) {
             id: a
         }
     });
-    let r=an.restaurant_id;
-    let c=an.customer_id;
-    let an1= await models.orderr.update({
-            status:"Finished"
-    }
-        ,{
-            where:{
-                cart_id:a
+    let r = an.restaurant_id;
+    let c = an.customer_id;
+    let an1 = await models.orderr.update({
+            status: "Finished"
+        }
+        , {
+            where: {
+                cart_id: a
             }
         }
-);
+    );
+});
+    router.post('/reject', async function(req, res, next) {
+        let ans = await models.orderr.findAll();
+        let l = ans.length + 1;
+        let a = req.body.cart_id;
+        let an = await models.cart.findOne({
 
+            where: {
+                id: a
+            }
+        });
+        let r=an.restaurant_id;
+        let c=an.customer_id;
+
+        let an2=await models.restaurant_manager.findOne({
+                where:{
+                    restaurant_id:r
+                }
+            }
+        );
+        //  console.log(new Date().toISOString().slice(0, 19).replace('T', ' '));
+        let an3=await models.orderr.create({
+                id:l+1200,
+                restaurant_id:r,
+                restaurant_manager_id:an2.id,
+                cart_id: a,
+                status:"Rejected",
+                Order_time: new Date().toLocaleString().slice(0, 19).replace('T', ' ')
+            }
+        );
+
+        //console.log(an3);
+        let an1= await models.cart.update({
+                order_id:l+1200
+            },{
+                where:{
+                    id:a
+                }
+            }
+        );
 
 
 
 
 
 });
+
 
 module.exports = router;

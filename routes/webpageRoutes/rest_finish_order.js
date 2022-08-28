@@ -163,7 +163,7 @@ router.get('/:id',async function(req,res){
             }
         });
         cart_id1.push(ansn2[i].cart_id);
-        console.log(ans3);
+        //console.log(ans3);
         let ans1 = await models.customer.findOne({
             where: {
                 id: ans3.customer_id
@@ -178,7 +178,7 @@ router.get('/:id',async function(req,res){
 
         let ans2 = await models.cart_item.findAll({
             where: {
-                cart_id: ansn[i].id
+                cart_id: ans3.id
             }
         });
 

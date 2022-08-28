@@ -84,6 +84,7 @@
         <th>Order</th>
         <th>Customer</th>
         <th>Confirm Order</th>
+        <th>Cancel Order</th>
         </tr>
         <% for(var i=0;i< cust_name.length;i++){ %>
 
@@ -94,6 +95,10 @@
 
         <button style="font-size:12px" class="confirm-btn" data-cart_id="<%=JSON.stringify(cart_id[i])%>">Confirm<i class="fa fa-shopping-cart"></i></button>
           </td>
+          <td>
+
+                  <button style="font-size:12px" class="rcancel-btn" data-cart_id="<%=JSON.stringify(cart_id[i])%>">Cancel<i class="fa fa-shopping-cart"></i></button>
+                    </td>
           <td></td>
         </tr>
         <% }%>
@@ -132,5 +137,6 @@
     <script src="/orderHandle.js" type="module"></script>
     <script src="/Finished.js" type="module"></script>
      <script src="/restconfirm.js"></script>
+        <script src="/restReject.js"></script>
     </body>
 </html>

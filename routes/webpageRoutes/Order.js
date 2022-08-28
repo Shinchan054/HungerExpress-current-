@@ -37,7 +37,11 @@ else
             id: ans.order_id
         }
     });
-
+    if(ans1.status=='Rejected'){
+        req.session.cart = null;
+        let url = '/images/reject.gif';
+        res.render('Webpages/OrderPage',{title:"Your order has been Canceled" , url:url,id:id,eta:0,mob:0,status:'Rejected'});
+    }
     if(ans1.status=="Confirmed") {
          req.session.cart = null;
 
