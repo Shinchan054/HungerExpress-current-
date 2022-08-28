@@ -44,7 +44,7 @@ router.get('/:id',async function(req,res){
                 category_id:result[i].id
             }
         });
-        let time=new Date().getHours()+1;
+        let time=new Date().getHours();
         let time1=new Date().getMinutes();
         if(time==result[i].end_time&&time1>0)
             continue;
