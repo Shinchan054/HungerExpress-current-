@@ -24,6 +24,8 @@ router.post('/', async function(req,res,next)  {
     let pass;
     email=req.body.username;
     pass=req.body.password;
+    email.replace(/[^\w\s@.]/gi, '');
+    pass.replace(/[^\w\s@.]/gi, '');
     let result=await models.customer.findOne({
         where: {
 
